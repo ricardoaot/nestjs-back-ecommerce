@@ -1,7 +1,93 @@
+### Plugin: Rest Client 
+
 GET http://localhost:3000/
+
+
+### Auth ###
+POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+  "email": "user3@gmail.com",
+  "password": "1234"
+}
 ###
+
+### USER ###
 GET http://localhost:3000/users
+Authorization: Basic: <email>:<password>
+
+
 ###
+GET http://localhost:3000/users?page=2&limit=2
+Authorization: Basic: <email>:<password>
+
+###
+
+GET http://localhost:3000/users/1
+Authorization: Basic: <email>:<password>
+
+###
+POST http://localhost:3000/users/
+Content-Type: application/json
+
+{
+  "email": "user4@gmail.com",
+  "name": "User 4",
+  "address": "Calle 4",
+  "phone": "4123456789",
+  "country": "Salvador"
+}
+###
+PUT http://localhost:3000/users/1
+Content-Type: application/json
+Authorization: Basic: <email>:<password>
+
+{
+  "email": "user4@gmail.com",
+  "name": "Modifyied User 4",
+  "address": "Calle 4",
+  "phone": "4123456789",
+  "country": "Salvador"
+}
+###
+DELETE http://localhost:3000/users/4
+Authorization: Basic: <email>:<password>
+
+
+### PRODUCTS ###
 GET http://localhost:3000/products
+
 ###
-GET http://localhost:3000/auth
+GET http://localhost:3000/products?page=1&limit=5
+
+###
+GET http://localhost:3000/products/1
+###
+POST http://localhost:3000/products/
+Content-Type: application/json
+Authorization: Basic: <email>:<password>
+
+{
+  "name": "Product 4",
+  "description": "Product 4",
+  "price": 20,
+  "stock": true,
+  "imgUrl": "http://google.com/imagen4"
+}
+###
+PUT http://localhost:3000/products/1
+Content-Type: application/json
+Authorization: Basic: <email>:<password>
+
+{
+  "name": "Modifyed Product 1",
+  "description": "Product 1",
+  "price": 20,
+  "stock": true,
+  "imgUrl": "http://google.com/imagen4"
+}
+###
+DELETE http://localhost:3000/products/1
+Authorization: Basic: <email>:<password>
+
