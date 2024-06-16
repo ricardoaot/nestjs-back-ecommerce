@@ -54,6 +54,12 @@ Authorization: Basic: <email>:<password>
 DELETE http://localhost:3000/users/4
 Authorization: Basic: <email>:<password>
 
+### CATEGORY ###
+Get http://localhost:3000/categories
+###
+Post http://localhost:3000/categories/seeder
+###
+
 
 ### PRODUCTS ###
 GET http://localhost:3000/products
@@ -75,6 +81,9 @@ Authorization: Basic: <email>:<password>
   "stock": true,
   "imgUrl": "http://google.com/imagen4"
 }
+###
+POST http://localhost:3000/products/seeder
+
 ###
 PUT http://localhost:3000/products/1
 Content-Type: application/json

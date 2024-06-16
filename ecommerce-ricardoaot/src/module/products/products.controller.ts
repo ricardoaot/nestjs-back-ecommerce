@@ -1,12 +1,18 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, Req, Res, UseGuards } from "@nestjs/common";
 import { ProductsService } from "./products.service";
+import { ProductsDBService } from "./products.DB.service";
 import { Request, Response, response } from "express";
-import { Product } from "./product.interface";
+import { Product } from "./product.entity";
 import { AuthGuard } from "src/guards/auth.guards";
+import { ProductsSeeder } from "./products.seeder";
 
 @Controller('products')
 export class ProductsController {
-    constructor( private readonly productsService: ProductsService){}
+    constructor( 
+        private readonly productsService: ProductsService,
+        private readonly productsDBService: ProductsDBService,
+        private readonly productsSeeder: ProductsSeeder
+    ){}
 
     @Get('/')
     async getProducts(
@@ -14,7 +20,7 @@ export class ProductsController {
         @Query('page') page: number = 1, 
         @Res() response: Response
     ){
-        const result = await this.productsService.getProducts(limit, page);
+        const result = await this.productsDBService.getProducts(limit, page);
         return response.status(200).send(result); 
     }
     @Get(':id')
@@ -22,7 +28,7 @@ export class ProductsController {
         @Param('id') id: string, 
         @Res() response: Response
     ){
-        const result = await this.productsService.getProductById(Number(id));
+        const result = await this.productsService.getProductById(id);
         return response.status(200).send(result);
     }
 
@@ -37,6 +43,11 @@ export class ProductsController {
         return response.status(201).send({message: 'Product created', id});
     }
 
+    @Post('/seeder')
+    async seedProducts(@Res() response: Response){
+        const result = await this.productsSeeder.seedProducts();
+        return response.status(201).send(result);
+    }
     //@HttpCode(200)
     @Put(':id')
     @UseGuards(AuthGuard)
@@ -45,7 +56,7 @@ export class ProductsController {
         @Param('id') id: string, 
         @Res() response: Response
     ){
-        const result = await this.productsService.updateProduct(product, Number(id));
+        const result = await this.productsService.updateProduct(product, id);
         return response.status(200).send({message: 'Product updated', id:result});
     }
 
@@ -55,7 +66,7 @@ export class ProductsController {
         @Param('id') id:string, 
         @Res() response: Response
     ){
-        const result = await this.productsService.deleteProduct(Number(id));
+        const result = await this.productsService.deleteProduct(id);
         return response.status(200).send({message: 'Product deleted', id:result});
     }
 
