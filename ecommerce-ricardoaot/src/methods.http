@@ -27,16 +27,18 @@ Authorization: Basic: <email>:<password>
 GET http://localhost:3000/users/1
 Authorization: Basic: <email>:<password>
 
-###
+### Create User
 POST http://localhost:3000/users/
 Content-Type: application/json
 
 {
   "email": "user4@gmail.com",
   "name": "User 4",
+  "password": "1234",
   "address": "Calle 4",
   "phone": "4123456789",
-  "country": "Salvador"
+  "city": "Lima",
+  "country": "Peru"
 }
 ###
 PUT http://localhost:3000/users/1
@@ -62,6 +64,9 @@ Post http://localhost:3000/categories/seeder
 
 
 ### PRODUCTS ###
+POST http://localhost:3000/products/seeder
+###
+
 GET http://localhost:3000/products
 
 ###
@@ -81,8 +86,6 @@ Authorization: Basic: <email>:<password>
   "stock": true,
   "imgUrl": "http://google.com/imagen4"
 }
-###
-POST http://localhost:3000/products/seeder
 
 ###
 PUT http://localhost:3000/products/1
@@ -100,3 +103,52 @@ Authorization: Basic: <email>:<password>
 DELETE http://localhost:3000/products/1
 Authorization: Basic: <email>:<password>
 
+
+### ORDERS ###
+
+### Create user
+PUT http://localhost:3000/users/1
+Content-Type: application/json
+Authorization: Basic: <email>:<password>
+
+{
+  "email": "user4@gmail.com",
+  "name": "Modifyied User 4",
+  "address": "Calle 4",
+  "phone": "4123456789",
+  "country": "Salvador"
+}
+
+### PRODUCTS ###
+POST http://localhost:3000/products/seeder
+
+###
+
+GET http://localhost:3000/products
+
+###Create order
+POST http://localhost:3000/orders/
+
+Content-Type: application/json
+
+{
+  "userId": "9c290045-6633-4cf5-b0b3-52fc0fecc4ff",
+  "products":[
+    {
+      "id":"a916e5ab-a8c1-4615-ad32-512d62ce4e8c"
+    },
+    {
+      "id":"b95616e1-0fc1-4267-90e4-13918695f98c"
+    }
+  ]
+}
+
+###
+GET http://localhost:3000/orders/67387cb9-1033-4797-93b5-3eb85cbea461
+
+
+
+{
+  "userId":"UUID del usuario",
+  
+}

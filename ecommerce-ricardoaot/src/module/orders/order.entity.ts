@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, OneToMany } from "typeorm";
+import { Entity, Column, CreateDateColumn, PrimaryGeneratedColumn, OneToOne, OneToMany } from "typeorm";
 import { v4 as uuid } from 'uuid';
 import { OrderDetail } from "src/module/orderDetails/orderDetail.entity";
 
@@ -11,9 +11,15 @@ export class Order {
     id: string = uuid();
 
     @Column()
-    userId: number;
+    userId: string;
 
-    @Column({type: 'date'})
+    /*@CreateDateColumn({
+        type: 'date'
+    })*/
+    @Column({ 
+        type: 'date',
+        default: new Date() 
+    })
     date: Date;
 
     @OneToMany(

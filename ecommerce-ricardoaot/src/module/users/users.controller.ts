@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, Res, UseGuards } from "@nestjs/common";
 import { UsersService } from "./users.service";
-import { User } from "./user.interface";
+import { User } from "./user.entity";
 import { Response, response } from "express";
 import { AuthGuard } from "src/guards/auth.guards";
 
@@ -20,7 +20,7 @@ export class UsersController {
     @Get(':id')
     @UseGuards(AuthGuard)
     async getUserById(@Param('id') id: string, @Res() response: Response){
-        const result = await this.usersService.getUserById(Number(id));
+        const result = await this.usersService.getUserById(id);
         return response.status(200).send(result);
     }
 
@@ -33,14 +33,14 @@ export class UsersController {
     @Put('/:id')
     @UseGuards(AuthGuard)
     async updateUser(@Param('id') id: string, @Body() user: User, @Res() response: Response){
-        const result = await this.usersService.updateUser(user, Number(id));
+        const result = await this.usersService.updateUser(user, id);
         return response.status(200).send({message: 'User updated', id:result});
     }
 
     @Delete(':id')
     @UseGuards(AuthGuard)
     async deleteUser(@Param('id') id: string, @Res() response: Response){
-        const result = await this.usersService.deleteUser(Number(id));
+        const result = await this.usersService.deleteUser(id);
         return response.status(200).send({message: 'User deleted', id:result});
     }
 }

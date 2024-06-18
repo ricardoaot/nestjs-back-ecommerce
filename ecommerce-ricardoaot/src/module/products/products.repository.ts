@@ -10,7 +10,6 @@ export class ProductsRepository {
     ){
         //super(productRepository.target, productRepository.manager, productRepository.queryRunner);
     }
-    
 
     async getProductById(id: string): Promise<Product> {
         return await this.productRepository.findOneBy({id});

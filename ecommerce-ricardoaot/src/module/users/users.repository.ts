@@ -1,56 +1,59 @@
 import { Injectable } from "@nestjs/common";
-import { User } from "./user.interface";
+import { User } from "./user.entity";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 
 @Injectable()
 export class UsersRepository {
-    private users: User[] = [
-        { id: 1, email: 'user1@gmail.com', name: 'User 1', password: '1234', address: 'Calle 1', phone: '1123456789', country: 'Venezuela' },
-        { id: 2, email: 'user2@gmail.com', name: 'User 2', password: '1234', address: 'Calle 1', phone: '2123456789', country: 'Peru', city: 'Lima' },
-        { id: 3, email: 'user3@gmail.com', name: 'User 3', password: '1234', address: 'Calle 1', phone: '3123456789', country: 'Colombia', city: 'Medellin' },
-    ]
+    constructor(
+        @InjectRepository(User) private userRepository: Repository<User>
+    ) {}
     async getUsers(limit: number, page: number): Promise<User[]> {
-        const result = this.users.slice((page-1)*limit, page*limit);
-        return result;
+        const result = await this.userRepository.find({
+            skip: (page - 1) * limit,
+            take: limit
+        })
+
+        return result
     }
 
-    async getUserById(id: number): Promise<User> {  
-        const result = this.users.find(user => user.id === id)
+    async getUserById(id: string): Promise<User> {  
+        const result = await this.userRepository.findOneBy({id});
         return result;
     }
     async getUserByEmail(email: string): Promise<User> {  
-        const result = this.users.find(user => user.email === email)
+        const result = await this.userRepository.findOneBy({email});
         return result;
     }
-    async createUser(user: Omit<User, 'id'>): Promise<number> {
-        const id =  this.users.length + 1
-        this.users = [...this.users, {id, ...user}];
-        return id;
+    async createUser(user: Omit<User, 'id'>): Promise<string> {
+        const createdUser = await this.userRepository.save(user);
+        return createdUser.id;
     }
 
-    async updateUser(user: User, id: number): Promise<number|null> {
-        const index = this.users.findIndex(u => u.id === id);
-        if(index !== -1) {
-            this.users[index] = {...this.users[index], ...user};
-            return id;  
-        }
-        return null;
+    async updateUser(user: User, id: string): Promise<string|null> {
+        const foundUser = await this.userRepository.findOneBy({id});
+        if(!foundUser) return null;
+        const updatedUser = {...foundUser, ...user}
+        await this.userRepository.save(updatedUser);
+        return updatedUser.id;
     }
 
-    async deleteUser(id: number): Promise<number|null> {
-        const index = this.users.findIndex(u => u.id === id);
-        if(index !== -1) {
-            this.users.splice(index, 1);
-            return id;
-        }
-        return null;
+    async deleteUser(id: string): Promise<string|null> {
+        const foundUser = await this.userRepository.findOneBy({id});
+        if(!foundUser) return null;
+        const deletedUser = await this.userRepository.remove(foundUser);
+        return deletedUser.id;
     }
 
     async logInUser(email: string, sentPassword: string): Promise<Omit<User,'password'>> {
-        const result = this.users.find(user => user.email === email && user.password === sentPassword);
-        
-        if(!result) return null;
-
-        const { password, ...userWithoutPassword } = result;
+        const foundUser = await this.userRepository.findOne({
+            where: {
+                email: email,
+                password: sentPassword
+            }
+        })
+        if(!foundUser) return null;
+        const { password, ...userWithoutPassword } = foundUser;
         return userWithoutPassword;
     }
 }

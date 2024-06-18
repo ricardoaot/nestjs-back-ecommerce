@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany, ManyToOne } from "typeorm";
 import { v4 as uuid } from 'uuid';
-import { Order } from "src/module/orders/orders.entity";
+import { Order } from "src/module/orders/order.entity";
 
 @Entity({
     name: 'orderDetails'
@@ -16,7 +16,9 @@ export class OrderDetail {
     @Column()
     order_id: string
 
-    @ManyToOne(() => Order, (order) => order.orderDetails)
+    @ManyToOne(
+        () => Order, 
+        (order) => order.orderDetails)
     order: Order
     
 }

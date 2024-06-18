@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { v4 as uuid } from 'uuid';
-import { Order } from "src/module/orders/orders.entity";
+import { Order } from "src/module/orders/order.entity";
 
 @Entity({
     name: 'users'
