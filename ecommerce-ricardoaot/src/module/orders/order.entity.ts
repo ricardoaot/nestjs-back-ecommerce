@@ -24,7 +24,7 @@ export class Order {
 
     @OneToMany(
         () => OrderDetail, 
-        (orderDetail) => orderDetail.order_id
+        (orderDetail) => orderDetail.order
     )
     orderDetails: OrderDetail[]
 }

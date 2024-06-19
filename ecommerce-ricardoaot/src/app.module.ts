@@ -10,6 +10,7 @@ import { UsersModule } from './module/users/users.module';
 import { ProductsModule } from './module/products/products.module';
 import { AuthModule } from './module/auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { OrderDetailsModule } from './module/orderDetails/orderDetail.module';
 
 @Module({
   imports: [
@@ -28,7 +29,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     ProductsModule, 
     AuthModule,
     CategoriesModule,
-    OrdersModule
+    OrdersModule,
+    OrderDetailsModule
   ],
   controllers: [AppController],
   providers: [AppService],

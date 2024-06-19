@@ -107,48 +107,44 @@ Authorization: Basic: <email>:<password>
 ### ORDERS ###
 
 ### Create user
-PUT http://localhost:3000/users/1
+POST http://localhost:3000/users/
 Content-Type: application/json
 Authorization: Basic: <email>:<password>
 
 {
-  "email": "user4@gmail.com",
-  "name": "Modifyied User 4",
-  "address": "Calle 4",
+  "email": "user7@gmail.com",
+  "name": "User 7",
+  "address": "Calle 7",
+  "password":"1234",
   "phone": "4123456789",
-  "country": "Salvador"
+  "country": "Peru",
+  "city":"Lima"
 }
 
-### PRODUCTS ###
+### Product Seeder 
 POST http://localhost:3000/products/seeder
 
-###
-
+### Product List
 GET http://localhost:3000/products
 
 ###Create order
 POST http://localhost:3000/orders/
-
 Content-Type: application/json
 
 {
-  "userId": "9c290045-6633-4cf5-b0b3-52fc0fecc4ff",
+  "userId": "c79d4dcf-beb2-44f1-9d7a-839c870c9e47",
   "products":[
     {
-      "id":"a916e5ab-a8c1-4615-ad32-512d62ce4e8c"
+      "id":"ec3a0d37-0c59-4c04-b5f4-d9cb5d2c01e2"
     },
     {
-      "id":"b95616e1-0fc1-4267-90e4-13918695f98c"
+      "id":"f5ca0ece-4cc5-4655-93c8-f4dab07c0507"
     }
   ]
 }
 
 ###
-GET http://localhost:3000/orders/67387cb9-1033-4797-93b5-3eb85cbea461
+GET http://localhost:3000/orders/cbf6f996-a2dd-45eb-a615-96b3cf3fdefc
 
-
-
-{
-  "userId":"UUID del usuario",
-  
-}
+###
+GET http://localhost:3000/orderDetails/

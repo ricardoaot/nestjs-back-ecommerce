@@ -9,8 +9,7 @@ export class OrdersRepository {
     constructor(
         @InjectRepository(Order) private readonly ordersRepository: Repository<Order>
     ) {}
-
-    async getOrder(id: string, limit: number, page: number): Promise<Order[]> {
+    async getOrder(id: string, limit: number = 10, page: number = 1): Promise<Order[]> {
         /*
             Busca una orden recibida por id.
 
@@ -19,7 +18,12 @@ export class OrdersRepository {
         const result = await this.ordersRepository.find({
             where: {id},
             skip: (page - 1) * limit,
-            take: limit
+            take: limit,
+            relations:{
+                orderDetails:{
+                    product:true
+                }
+            }
         });  
 
         return result
