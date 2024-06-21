@@ -10,7 +10,12 @@ export class OrdersController {
     ){}
 
     @Get(':id')
-    async getOrder(@Param('id') id: string, @Query('limit') limit: number, @Query('page') page: number, @Res() response: Response){
+    async getOrder(
+        @Param('id') id: string, 
+        @Query('limit') limit: number, 
+        @Query('page') page: number, 
+        @Res() response: Response
+    ){
         const result = await this.ordersService.getOrder(id, limit, page);
         return response.status(200).send(result);
     }

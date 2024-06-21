@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Product } from "./product.entity";
-import { Repository } from "typeorm";
+import { Repository, MoreThan } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 
 @Injectable()
@@ -12,7 +12,13 @@ export class ProductsRepository {
     }
 
     async getProductById(id: string): Promise<Product> {
-        return await this.productRepository.findOneBy({id});
+        const result = await this.productRepository.findOne({
+            where:{
+                id,
+                stock: MoreThan(0)
+            }
+        });
+        return result;
     }
 
     async getProducts(limit: number, page: number): Promise<Product[]> {

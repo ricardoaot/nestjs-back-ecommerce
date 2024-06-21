@@ -5,6 +5,8 @@ import { LoggerMiddleware } from "src/middlewares/logger.middleware";
 import { UsersRepository } from "./users.repository";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "./user.entity";
+import { Order } from "../orders/order.entity";
+import { OrdersRepository } from "../orders/order.repository";
 
 @Module({
     imports: [TypeOrmModule.forFeature([User])],   
@@ -14,7 +16,8 @@ import { User } from "./user.entity";
         UsersRepository
     ]
 })
-export class UsersModule implements NestModule{
+export class UsersModule 
+    implements NestModule{
     configure(consumer: MiddlewareConsumer) {
         consumer.apply(LoggerMiddleware).forRoutes('users');
     }

@@ -17,10 +17,14 @@ export class UsersService {
         return users
     }
 
-    async getUserById(id: string): Promise<Omit <User,'password'>> {
+    async getUserById(
+        id: string
+    ): Promise <any> //Omit <User,'password'>> 
+    {
         const result = await this.usersRepository.getUserById(id)
-        const { password, ...user } = result;
-        return user;
+        //const { password, ...user } = result;
+        //return user;
+        return result
     }
 
     async createUser(user: Omit<User, 'id'>): Promise<string> {

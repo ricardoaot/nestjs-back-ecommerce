@@ -132,19 +132,28 @@ POST http://localhost:3000/orders/
 Content-Type: application/json
 
 {
-  "userId": "c79d4dcf-beb2-44f1-9d7a-839c870c9e47",
+  "userId": "a17f1d2b-ee5a-44db-a5a5-623ad57ad2d3",
   "products":[
     {
-      "id":"ec3a0d37-0c59-4c04-b5f4-d9cb5d2c01e2"
+      "id":"309573e1-55e6-45fb-8b41-3e2ba8729c13"
     },
     {
-      "id":"f5ca0ece-4cc5-4655-93c8-f4dab07c0507"
+      "id":"29512337-5cea-41ef-9ab6-e30622ea07ab"
     }
   ]
 }
 
 ###
-GET http://localhost:3000/orders/cbf6f996-a2dd-45eb-a615-96b3cf3fdefc
+GET http://localhost:3000/orders/40da1aa6-ebf9-4d35-9daf-7b9485061739
 
 ###
 GET http://localhost:3000/orderDetails/
+
+###
+GET http://localhost:3000/users/a17f1d2b-ee5a-44db-a5a5-623ad57ad2d3
+Authorization: Basic: <email>:<password>
+
+
+###
+GET http://localhost:3000/users/
+Authorization: Basic: <email>:<password>

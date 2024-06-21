@@ -20,11 +20,20 @@ export class OrdersRepository {
             skip: (page - 1) * limit,
             take: limit,
             relations:{
+                user:true,
                 orderDetails:{
                     product:true
                 }
-            }
-        });  
+            },
+            select:{
+                user: {
+                    id:true,
+                    name:true,
+                    email:true,
+                    password:false
+                }                    
+            },
+    });  
 
         return result
     }

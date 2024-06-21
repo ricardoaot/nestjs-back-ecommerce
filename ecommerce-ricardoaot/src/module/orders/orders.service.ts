@@ -5,7 +5,7 @@ import { OrderDetailsRepository } from "../orderDetails/orderDetails.repository"
 import { UsersRepository } from "../users/users.repository";
 import { ProductsRepository } from "../products/products.repository";
 import { CreateOrderDto, CreatedOrderResultDto } from "./orders.dto";
-import typeormDT from "../../config/typeorm";
+
 
 @Injectable()
 export class OrdersService {
@@ -15,10 +15,13 @@ export class OrdersService {
         private readonly orderDetailsRepository: OrderDetailsRepository,
         private readonly productsRepository: ProductsRepository,
     ) {}
-    async getOrder(id: string, limit: number, page: number): Promise<Order[]> {
-        return await this.ordersRepository.getOrder(id, limit, page);
-    }
 
+    async getOrder(
+        id: string, limit: number, page: number
+    ): Promise<Order[]> {
+        const result = await this.ordersRepository.getOrder(id, limit, page);
+        return result
+    }
 
     async addOrder(
         order: CreateOrderDto
@@ -30,7 +33,7 @@ export class OrdersService {
         if(!foundUser) return {message: "User not found"}; // User not found
 
         //add order header
-        const newOrder = await this.ordersRepository.addOrder({userId:order.userId});
+        const newOrder = await this.ordersRepository.addOrder({user:foundUser[0]});
         const idNewOrder = newOrder.id;        
         
         //add order details
@@ -39,6 +42,9 @@ export class OrdersService {
                 //get product
                 const foundProduct = await this.productsRepository.getProductById(product.id)
                 const product_price = foundProduct.price
+                //Update stock
+                foundProduct.stock -=  1
+                await this.productsRepository.updateProduct(foundProduct, foundProduct.id)
 
                 console.log(product_price)
 

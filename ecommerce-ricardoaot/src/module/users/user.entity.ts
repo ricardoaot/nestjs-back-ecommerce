@@ -31,6 +31,9 @@ export class User {
     @Column()
     city: string;
 
-    @OneToMany(() => Order, (order) => order.userId)
+    @OneToMany(
+        () => Order, 
+        (order) => order.user
+    )
     orders: Order[]
 }

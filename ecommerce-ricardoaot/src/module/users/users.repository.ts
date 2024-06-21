@@ -6,7 +6,7 @@ import { Repository } from "typeorm";
 @Injectable()
 export class UsersRepository {
     constructor(
-        @InjectRepository(User) private userRepository: Repository<User>
+        @InjectRepository(User) private readonly userRepository: Repository<User>
     ) {}
     async getUsers(limit: number, page: number): Promise<User[]> {
         const result = await this.userRepository.find({
@@ -18,7 +18,18 @@ export class UsersRepository {
     }
 
     async getUserById(id: string): Promise<User> {  
-        const result = await this.userRepository.findOneBy({id});
+        const result = await this.userRepository.findOne(
+            {
+                where: {id:id},
+                relations: {
+                    orders:{
+                        orderDetails:{
+                            product:true
+                        }
+                    }
+                }
+            },
+        );
         return result;
     }
     async getUserByEmail(email: string): Promise<User> {  
