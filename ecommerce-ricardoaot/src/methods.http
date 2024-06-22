@@ -112,14 +112,20 @@ Content-Type: application/json
 Authorization: Basic: <email>:<password>
 
 {
-  "email": "user7@gmail.com",
-  "name": "User 7",
-  "address": "Calle 7",
+  "email": "user10@gmail.com",
+  "name": "User 10",
+  "address": "Calle 10",
   "password":"1234",
   "phone": "4123456789",
   "country": "Peru",
   "city":"Lima"
 }
+
+### Category Seeder 
+POST http://localhost:3000/categories/seeder
+
+### Category list
+GET http://localhost:3000/categories/
 
 ### Product Seeder 
 POST http://localhost:3000/products/seeder
@@ -127,31 +133,37 @@ POST http://localhost:3000/products/seeder
 ### Product List
 GET http://localhost:3000/products
 
-###Create order
+### Create order
 POST http://localhost:3000/orders/
 Content-Type: application/json
 
 {
-  "userId": "a17f1d2b-ee5a-44db-a5a5-623ad57ad2d3",
+  "userId": "4a3c55a2-13a7-4a85-ade6-985e2ef7d1ff",
   "products":[
     {
-      "id":"309573e1-55e6-45fb-8b41-3e2ba8729c13"
+      "id":"4898f4cf-5165-4bf7-8e57-234ec0288e61"
     },
     {
-      "id":"29512337-5cea-41ef-9ab6-e30622ea07ab"
+      "id":"f6312a6f-ef6f-4d16-b505-5d908db5922b"
     }
   ]
 }
 
-###
-GET http://localhost:3000/orders/40da1aa6-ebf9-4d35-9daf-7b9485061739
 
-###
+### Get order by id
+GET http://localhost:3000/orders/2aa4efd2-7bf5-4f27-a7d8-f5f982e892c3
+
+### Get order details
 GET http://localhost:3000/orderDetails/
 
 ###
 GET http://localhost:3000/users/a17f1d2b-ee5a-44db-a5a5-623ad57ad2d3
 Authorization: Basic: <email>:<password>
+###
+GET http://localhost:3000/users/4a3c55a2-13a7-4a85-ade6-985e2ef7d1ff
+Authorization: Basic: <email>:<password>
+
+
 
 
 ###

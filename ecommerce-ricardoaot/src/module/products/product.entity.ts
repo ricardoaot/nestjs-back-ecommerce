@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { v4 as uuid } from 'uuid';
+import { OrderDetail } from "../orderDetails/orderDetail.entity";
 
 @Entity({
     name: 'products'
@@ -23,6 +24,9 @@ export class Product {
     
     @Column({ default: 'default image url' })
     imgUrl: string
+
+    @ManyToMany(() => OrderDetail, (orderDetail) => orderDetail.products)
+    orderDetails: OrderDetail[]
 }
 
 //Shift + Alt + A

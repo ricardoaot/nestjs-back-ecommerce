@@ -21,8 +21,9 @@ export class OrdersRepository {
             take: limit,
             relations:{
                 user:true,
+                //orderDetails:true,
                 orderDetails:{
-                    product:true
+                    products:true
                 }
             },
             select:{

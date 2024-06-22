@@ -22,11 +22,19 @@ export class UsersRepository {
             {
                 where: {id:id},
                 relations: {
-                    orders:{
+                    orders:true
+/*
+                    {
                         orderDetails:{
                             product:true
                         }
                     }
+*/
+                },
+                select: {
+                    id:true,
+                    name:true,
+                    email:true
                 }
             },
         );

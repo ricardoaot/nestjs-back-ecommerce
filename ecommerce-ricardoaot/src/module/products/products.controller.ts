@@ -44,11 +44,10 @@ export class ProductsController {
     }
 
     @Post('/seeder')
-    async seedProducts(@Res() response: Response){
-        const result = await this.productsSeeder.seedProducts();
-        return response.status(201).send(result);
+    async seedProducts(){
+        return await this.productsSeeder.seedProducts();
     }
-    //@HttpCode(200)
+    
     @Put(':id')
     @UseGuards(AuthGuard)
     async updateProducts(
