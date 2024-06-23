@@ -47,6 +47,12 @@ export class User {
     })
     city: string;
 
+    @Column({ 
+        type: 'date',
+        default: new Date() 
+    })
+    createdAt: Date;
+
     @OneToMany(
         () => Order, 
         (order) => order.user
