@@ -10,7 +10,9 @@ export class Product {
     @PrimaryGeneratedColumn('uuid')
     id:string = uuid();
 
-    @Column()
+    @Column({
+        length: 50
+    })
     name: string
     
     @Column()
@@ -22,19 +24,9 @@ export class Product {
     @Column()
     stock: number
     
-    @Column({ default: 'default image url' })
+    @Column({ default: 'http://defaultImageUrl.com' })
     imgUrl: string
 
     @ManyToMany(() => OrderDetail, (orderDetail) => orderDetail.products)
     orderDetails: OrderDetail[]
 }
-
-//Shift + Alt + A
-/* id: 
-name: 
-description: 
-price: 
-stock: 
-imgUrl: 
-category_id  (Relación 1:N).
-Relación N:N con orderDetails. */

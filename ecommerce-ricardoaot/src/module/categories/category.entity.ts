@@ -9,6 +9,8 @@ export class Category {
     @PrimaryGeneratedColumn('uuid')
     id: string = uuid();
 
-    @Column()
+    @Column(
+        { length: 50 }
+    )
     name: string
 }

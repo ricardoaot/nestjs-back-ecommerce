@@ -10,25 +10,41 @@ export class User {
     @PrimaryGeneratedColumn('uuid')
     id: string = uuid();
 
-    @Column()
+    @Column({ length: 50 })
     name: string;
 
-    @Column()
+    @Column({ 
+        unique: true,
+        length: 50 
+    })
     email: string;
 
-    @Column()
+    @Column({
+        length: 40 // 20 was original requeriment but it was too short for hashing
+    })
     password: string;
 
-    @Column()
-    phone: string;
+    @Column(
+        'int', 
+        {nullable: true}
+    )
+    phone: number;
 
-    @Column()
+    @Column({
+        length: 50,
+        nullable: true
+    })
     country: string;
 
-    @Column()
+    @Column(
+        {nullable: true}
+    )
     address: string;
 
-    @Column()
+    @Column({
+        length: 50,
+        nullable: true
+    })
     city: string;
 
     @OneToMany(

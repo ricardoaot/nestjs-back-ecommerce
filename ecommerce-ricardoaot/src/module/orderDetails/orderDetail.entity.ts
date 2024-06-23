@@ -14,23 +14,8 @@ export class OrderDetail {
     @Column('decimal', { precision: 10, scale: 2 })
     price: number;
 
-    //@OneToOne(()=> Order)
-    //@JoinColumn()
-    //order: Order
-
     @ManyToMany(() => Product)
     @JoinTable()
     products: Product[]
-
-/*    
-    @ManyToOne(
-        () => Order, 
-        (order) => order.orderDetails)
-    order: Order
-
-    @OneToOne(()=> Product)
-    @JoinColumn()
-    product: Product
-*/  
 
 }
