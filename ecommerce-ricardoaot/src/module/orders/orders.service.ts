@@ -39,7 +39,7 @@ export class OrdersService {
         
                 //get product
                 const foundProduct = await this.productsRepository.getProductById(product.id)
-                if(foundProduct.stock>0) {
+                if(foundProduct) {
                     console.log("foundProduct ",foundProduct)
                     arrayFoundProducts.push(foundProduct)
                     
@@ -53,6 +53,8 @@ export class OrdersService {
                     await this.productsRepository.updateProduct(foundProduct, foundProduct.id)                    
                 }
         }
+
+        if(arrayFoundProducts.length === 0) return {message: "No products found"}
     
         //add order details
         const newOrderDetails = await this.orderDetailsRepository.addOrderDetail(
