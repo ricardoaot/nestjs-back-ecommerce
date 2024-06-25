@@ -113,10 +113,10 @@ Authorization: Basic: <email>:<password>
 
 {
   "email": "user10@gmail.com",
-  "name": "User 10",
+  "name": "Claudita",
   "address": "Calle 10",
   "password":"1234",
-  "phone": "4123456789",
+  "phone": "412345",
   "country": "Peru",
   "city":"Lima"
 }
@@ -138,34 +138,27 @@ POST http://localhost:3000/orders/
 Content-Type: application/json
 
 {
-  "userId": "4a3c55a2-13a7-4a85-ade6-985e2ef7d1ff",
+  "userId": "d4d54115-16c6-4375-8ee2-dd1fda6a279b",
   "products":[
     {
-      "id":"4898f4cf-5165-4bf7-8e57-234ec0288e61"
+      "id":"7c11608d-40cd-4b67-a409-57a9069e67a2"
     },
     {
-      "id":"f6312a6f-ef6f-4d16-b505-5d908db5922b"
+      "id":"5767e5e3-bb91-4458-8178-3d98e8dff8f0"
     }
   ]
 }
 
 
 ### Get order by id
-GET http://localhost:3000/orders/2aa4efd2-7bf5-4f27-a7d8-f5f982e892c3
+GET http://localhost:3000/orders/c0dee38e-17e7-4906-b65b-acb9a32ffc85
 
 ### Get order details
 GET http://localhost:3000/orderDetails/
 
-###
-GET http://localhost:3000/users/a17f1d2b-ee5a-44db-a5a5-623ad57ad2d3
-Authorization: Basic: <email>:<password>
-###
-GET http://localhost:3000/users/4a3c55a2-13a7-4a85-ade6-985e2ef7d1ff
+### Get user and orders
+GET http://localhost:3000/users/8beae30b-8cc0-48aa-abca-3b717557edb4
 Authorization: Basic: <email>:<password>
 
 
 
-
-###
-GET http://localhost:3000/users/
-Authorization: Basic: <email>:<password>
