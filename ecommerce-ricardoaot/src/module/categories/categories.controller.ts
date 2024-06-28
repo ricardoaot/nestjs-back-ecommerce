@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Body, Res, Delete } from "@nestjs/common";
+import { Controller, Post, Get, Body, Res, Delete, BadRequestException } from "@nestjs/common";
 import { CategoriesService } from "./categories.service";
 import { CategoriesSeeder } from "./categories.seeder";
 import { Category } from "./category.entity";
@@ -13,15 +13,23 @@ export class CategoriesController {
 
     @Post('/seeder')
     async seedCategories() {
-        return await this.categoriesSeeder.seedCategories()
+        try{
+            return await this.categoriesSeeder.seedCategories()
+        }catch(error) {
+            throw new BadRequestException(error.message);
+        }
     }
 
     @Get('/')
     async getCategories(
         @Res() response: Response  
     ) {
-        const result = await this.categoriesService.getCategories()
-        return response.status(200).send(result)
+        try{
+            const result = await this.categoriesService.getCategories()
+            return response.status(200).send(result)    
+        }catch(error) {
+            throw new BadRequestException(error.message);
+        }
     }
 
     @Post('/')
@@ -29,8 +37,12 @@ export class CategoriesController {
         @Body() category: Omit<Category, 'id'>,
         @Res() response: Response
     ) {
-        const result = await this.categoriesService.addCategory(category)
-        return response.status(201).send(result)
+        try{
+            const result = await this.categoriesService.addCategory(category)
+            return response.status(201).send(result)    
+        }catch(error) {
+            throw new BadRequestException(error.message);
+        }
     }
 
 }    

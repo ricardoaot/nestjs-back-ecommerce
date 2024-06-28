@@ -1,7 +1,7 @@
 import { Entity, Column, JoinColumn, CreateDateColumn, PrimaryGeneratedColumn, OneToOne, OneToMany, ManyToOne } from "typeorm";
 import { v4 as uuid } from 'uuid';
-import { OrderDetail } from "src/module/orderDetails/orderDetail.entity";
-import { User } from "src/module/users/user.entity";
+import { OrderDetail } from "../orderDetails/orderDetail.entity";
+import { User } from "../users/user.entity";
 
 @Entity({   
     name: 'orders'

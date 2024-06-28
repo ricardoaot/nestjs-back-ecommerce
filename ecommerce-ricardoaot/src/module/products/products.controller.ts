@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, Req, Res, UseGuards } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, HttpCode, Param, ParseUUIDPipe, Post, Put, Query, Req, Res, UseGuards } from "@nestjs/common";
 import { ProductsService } from "./products.service";
 import { ProductsDBService } from "./products.DB.service";
 import { Request, Response, response } from "express";
@@ -20,16 +20,24 @@ export class ProductsController {
         @Query('page') page: number = 1, 
         @Res() response: Response
     ){
-        const result = await this.productsDBService.getProducts(limit, page);
-        return response.status(200).send(result); 
+        try{
+            const result = await this.productsDBService.getProducts(limit, page);
+            return response.status(200).send(result);                 
+        }catch(error) {
+            throw new BadRequestException(error.message);
+        }
     }
     @Get(':id')
     async getProductById(
-        @Param('id') id: string, 
+        @Param('id', ParseUUIDPipe) id: string, 
         @Res() response: Response
     ){
-        const result = await this.productsService.getProductById(id);
-        return response.status(200).send(result);
+        try{
+            const result = await this.productsService.getProductById(id);
+            return response.status(200).send(result);    
+        }catch(error) {
+            throw new BadRequestException(error.message);
+        }
     }
 
     @Post('/')
@@ -38,35 +46,51 @@ export class ProductsController {
         @Body() product:Omit<Product,'id'>, 
         @Res() response: Response
     ){
-        console.log(product);
-        const id = await this.productsService.createProduct(product);
-        return response.status(201).send({message: 'Product created', id});
+        try{
+            console.log(product);
+            const id = await this.productsService.createProduct(product);
+            return response.status(201).send({message: 'Product created', id});                
+        }catch(error) {
+            throw new BadRequestException(error.message);
+        }
     }
 
     @Post('/seeder')
     async seedProducts(){
-        return await this.productsSeeder.seedProducts();
+        try{
+            return await this.productsSeeder.seedProducts();            
+        }catch(error) {
+            throw new BadRequestException(error.message);
+        }
     }
     
     @Put(':id')
     @UseGuards(AuthGuard)
     async updateProducts(
         @Body() product: Product, 
-        @Param('id') id: string, 
+        @Param('id', ParseUUIDPipe) id: string, 
         @Res() response: Response
     ){
-        const result = await this.productsService.updateProduct(product, id);
-        return response.status(200).send({message: 'Product updated', id:result});
+        try{
+            const result = await this.productsService.updateProduct(product, id);
+            return response.status(200).send({message: 'Product updated', id:result});    
+        }catch(error) {
+            throw new BadRequestException(error.message);
+        }
     }
 
     @Delete(':id')
     @UseGuards(AuthGuard)
     async deleteProducts(
-        @Param('id') id:string, 
+        @Param('id', ParseUUIDPipe) id:string, 
         @Res() response: Response
     ){
-        const result = await this.productsService.deleteProduct(id);
-        return response.status(200).send({message: 'Product deleted', id:result});
+        try{
+            const result = await this.productsService.deleteProduct(id);
+            return response.status(200).send({message: 'Product deleted', id:result});    
+        }catch(error) {
+            throw new BadRequestException(error.message);
+        }
     }
 
 }

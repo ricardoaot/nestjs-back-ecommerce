@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { v4 as uuid } from 'uuid';
-import { Order } from "src/module/orders/order.entity";
+import { Order } from "../orders/order.entity";
 
 @Entity({
     name: 'users'
@@ -24,11 +24,11 @@ export class User {
     })
     password: string;
 
-    @Column(
-        'int', 
-        {nullable: true}
-    )
-    phone: number;
+    @Column({
+        length: 20, 
+        nullable: true
+    })
+    phone: string;
 
     @Column({
         length: 50,

@@ -1,10 +1,12 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
   Get,
   HttpCode,
   Param,
+  ParseUUIDPipe,
   Post,
   Put,
   Query,
@@ -15,6 +17,7 @@ import { UsersService } from './users.service';
 import { User } from './user.entity';
 import { Response, response } from 'express';
 import { AuthGuard } from 'src/guards/auth.guards';
+import { CreateUserDto } from './user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -27,42 +30,68 @@ export class UsersController {
     @Query('page') page: number = 1,
     @Res() response: Response,
   ) {
-    const result = await this.usersService.getUsers(limit, page);
-    return response.status(200).send(result);
+    try{
+      const result = await this.usersService.getUsers(limit, page);
+      return response.status(200).send(result);  
+    }catch(error) {
+      throw new BadRequestException(error.message);
+    }
   }
 
   @Get(':id')
   @UseGuards(AuthGuard)
-  async getUserById(@Param('id') id: string, @Res() response: Response) {
-    const result = await this.usersService.getUserById(id);
-    return response.status(200).send(result);
+  async getUserById(
+    @Param('id', ParseUUIDPipe) id: string, 
+    @Res() response: Response
+  ) {
+    try{
+      const result = await this.usersService.getUserById(id);
+      return response.status(200).send(result);
+    }catch(error) {
+      throw new BadRequestException(error.message);
+    }
   }
 
   @Post('/')
-  async createUser(@Body() user: Omit<User, 'id'>, @Res() response: Response) {
-    const id = await this.usersService.createUser(user);
-    return response.status(201).send({ message: 'User created', id: id });
+  async createUser(
+    //@Body() user: Omit<User, 'id'>, 
+    @Body() user: CreateUserDto, 
+    @Res() response: Response
+  ) {
+    try{
+      const id = await this.usersService.createUser(user);
+      return response.status(201).send({ message: 'User created', id: id });
+    }catch(error) {
+      throw new BadRequestException(error.message);
+    }
   }
 
   @Put('/:id')
   @UseGuards(AuthGuard)
   async updateUser(
-    @Param('id') id: string,
+    @Param('id', ParseUUIDPipe) id: string,
     @Body() user: User,
     @Res() response: Response,
   ) {
-    const result = await this.usersService.updateUser(user, id);
-    return response.status(200).send({ message: 'User updated', id: result });
+    try{
+      const result = await this.usersService.updateUser(user, id);
+      return response.status(200).send({ message: 'User updated', id: result });
+    }catch(error) {
+      throw new BadRequestException(error.message);
+    }
   }
 
   @Delete(':id')
   @UseGuards(AuthGuard)
   async deleteUser(
-    @Param('id') id: string,
+    @Param('id', ParseUUIDPipe) id: string,
     @Res() response: Response,
-    //
   ) {
-    const result = await this.usersService.deleteUser(id);
-    return response.status(200).send({ message: 'User deleted', id: result });
+    try{
+      const result = await this.usersService.deleteUser(id);
+      return response.status(200).send({ message: 'User deleted', id: result });
+    }catch(error) {
+      throw new BadRequestException(error.message);
+    }
   }
 }
