@@ -11,6 +11,7 @@ import { ProductsModule } from './module/products/products.module';
 import { AuthModule } from './module/auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrderDetailsModule } from './module/orderDetails/orderDetail.module';
+import { FileModule } from './module/file/file.module';
 
 @Module({
   imports: [
@@ -30,7 +31,8 @@ import { OrderDetailsModule } from './module/orderDetails/orderDetail.module';
     AuthModule,
     CategoriesModule,
     OrdersModule,
-    OrderDetailsModule
+    OrderDetailsModule,
+    FileModule
   ],
   controllers: [AppController],
   providers: [AppService],

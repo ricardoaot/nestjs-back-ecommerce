@@ -32,7 +32,7 @@ export class ProductsRepository {
         return await this.productRepository.save(product);
     }
 
-    async updateProduct(product: Product, id: string): Promise<Product> {
+    async updateProduct(product: Partial<Product>, id: string): Promise<Product> {
         const productFound = await this.productRepository.findOneBy({id});
         if (!productFound) return undefined;
         const productUpdated = {...productFound, ...product}

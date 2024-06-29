@@ -18,9 +18,10 @@ export class ProductsService {
         const createdProduct = await this.productsRepository.createProduct(product)
         return createdProduct.id
     }
-    async updateProduct(product: Product, id: string): Promise<string> {
+    async updateProduct(product: Partial<Product>, id: string): Promise<any> {
+        //Validate looking for product in DB before updating
         const updatedProduct = await this.productsRepository.updateProduct(product, id)
-        return updatedProduct.id;
+        return updatedProduct;
     }
     async deleteProduct(id: string): Promise<string> {
         const deletedProduct = await this.productsRepository.deleteProduct(id)

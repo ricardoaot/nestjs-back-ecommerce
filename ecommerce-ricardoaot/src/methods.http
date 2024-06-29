@@ -115,7 +115,7 @@ Authorization: Basic: <email>:<password>
   "email": "user10@gmail.com",
   "name": "Claudita",
   "address": "Calle 10",
-  "password":"1234",
+  "password":"Claudia@1234",
   "phone": "412345",
   "country": "Peru",
   "city":"Lima"
@@ -138,13 +138,13 @@ POST http://localhost:3000/orders/
 Content-Type: application/json
 
 {
-  "userId": "d4d54115-16c6-4375-8ee2-dd1fda6a279b",
+  "userId": "23ebff95-a6b0-4376-864f-ff0da411a4c3",
   "products":[
     {
-      "id":"7c11608d-40cd-4b67-a409-57a9069e67a2"
+      "id":"4871688e-e431-40c6-99f5-7f841423bae9"
     },
     {
-      "id":"5767e5e3-bb91-4458-8178-3d98e8dff8f0"
+      "id":"965004fc-2b84-4e68-a974-25ebfe347825"
     }
   ]
 }
@@ -161,4 +161,13 @@ GET http://localhost:3000/users/8beae30b-8cc0-48aa-abca-3b717557edb4
 Authorization: Basic: <email>:<password>
 
 
+### UPDATE IMAGES
+POST http://localhost:3000/files/uploadImage/1efe88a1-dce8-4b2a-b031-db3ffcdeaee5
+Content-Type: multipart/form-data; boundary=boundary123
 
+--boundary123
+Content-Disposition: form-data; name="image"; filename="image.jpg"
+Content-Type: image/jpeg
+
+< binary data >
+--boundary123--
