@@ -14,9 +14,12 @@ export class AuthService {
     ){}
 
     
-    async signIn(login: SignInDto): Promise <Omit <User,'password'>> {
+    async signIn(
+        login: SignInDto
+    )//: Promise <Omit <User,'password'>> 
+    {
         const { email, password: clientPassword } = login
-        
+
         const user = await this.getUserByEmail(email);
         if (!user) 
             throw new BadRequestException('Email or password incorrect');
@@ -28,7 +31,18 @@ export class AuthService {
         
         const { password: _, ...userWithoutPassword } = user
 
-        return userWithoutPassword        
+        const userPayload = {
+            sub: user.id,
+            id: user.id,
+            email: user.email
+        }
+
+        const token = await this.jwtService.signAsync(userPayload)
+
+        return {
+            user: userWithoutPassword, 
+            token: token
+        }        
     }
     
 

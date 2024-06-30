@@ -10,7 +10,7 @@ import {
   Post,
   Put,
   Query,
-  Res,
+  Res, Req,
   UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
@@ -28,6 +28,7 @@ export class UsersController {
   async getUsers(
     @Query('limit') limit: number = 5,
     @Query('page') page: number = 1,
+    @Req() request: Request,
     @Res() response: Response,
   ) {
     try{
