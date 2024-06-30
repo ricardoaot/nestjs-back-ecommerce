@@ -1,10 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, ParseUUIDPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, ParseUUIDPipe, UseGuards } from '@nestjs/common';
 import { FileService } from './file.service';
 import { CreateFileDto } from './dto/create-file.dto';
 import { UpdateFileDto } from './dto/update-file.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CloudinaryService } from './cloudinary.service';
 import { ProductsService } from '../products/products.service';
+import { AuthGuard } from 'src/guards/auth.guards';
+
 @Controller('files')
 export class FileController {
   constructor(
@@ -14,6 +16,7 @@ export class FileController {
   ) {}
 
   @Post('uploadImage/:id')
+  @UseGuards(AuthGuard)
   @UseInterceptors(FileInterceptor('image'))
   async uploadProductImage(
     //@Body() createFileDto: CreateFileDto 
