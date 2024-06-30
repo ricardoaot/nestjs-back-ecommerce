@@ -28,7 +28,9 @@ export class UsersService {
         return result
     }
 
-    async createUser(user: CreateUserDto): Promise<string> {
+    async createUser(
+        user: CreateUserDto
+    ): Promise <Partial <User> > {
         return await this.usersRepository.createUser(user);
     }
 

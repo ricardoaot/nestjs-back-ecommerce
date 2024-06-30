@@ -45,9 +45,12 @@ export class UsersRepository {
         const result = await this.userRepository.findOneBy({email});
         return result;
     }
-    async createUser(user: CreateUserDto): Promise<string> {
+    async createUser(
+        user: CreateUserDto
+    ): Promise <Omit <User, 'password'>> {
         const createdUser = await this.userRepository.save(user);
-        return createdUser.id;
+        const  { password, ...userWithoutPassword } = createdUser;
+        return userWithoutPassword;
     }
 
     async updateUser(user: User, id: string): Promise<string|null> {
@@ -65,7 +68,10 @@ export class UsersRepository {
         return deletedUser.id;
     }
 
-    async logInUser(email: string, sentPassword: string): Promise<Omit<User,'password'>> {
+    /*
+    async logInUser(
+        email: string, sentPassword: string
+    ): Promise <Omit <User,'password'>> {
         const foundUser = await this.userRepository.findOne({
             where: {
                 email: email,
@@ -75,5 +81,5 @@ export class UsersRepository {
         if(!foundUser) return null;
         const { password, ...userWithoutPassword } = foundUser;
         return userWithoutPassword;
-    }
+    }*/
 }

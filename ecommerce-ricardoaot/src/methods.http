@@ -8,8 +8,8 @@ POST http://localhost:3000/auth/signin
 Content-Type: application/json
 
 {
-  "email": "user3@gmail.com",
-  "password": "1234"
+  "email": "user12@gmail.com",
+  "password": "Claudia@1234"
 }
 ###
 
@@ -28,7 +28,7 @@ GET http://localhost:3000/users/1
 Authorization: Basic: <email>:<password>
 
 ### Create User
-POST http://localhost:3000/users/
+POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
@@ -107,12 +107,12 @@ Authorization: Basic: <email>:<password>
 ### ORDERS ###
 
 ### Create user
-POST http://localhost:3000/users/
+POST http://localhost:3000/auth/signup
 Content-Type: application/json
 Authorization: Basic: <email>:<password>
 
 {
-  "email": "user10@gmail.com",
+  "email": "user12@gmail.com",
   "name": "Claudita",
   "address": "Calle 10",
   "password":"Claudia@1234",
@@ -131,7 +131,7 @@ GET http://localhost:3000/categories/
 POST http://localhost:3000/products/seeder
 
 ### Product List
-GET http://localhost:3000/products
+GET http://localhost:3000/products?page=1&limit=20
 
 ### Create order
 POST http://localhost:3000/orders/
@@ -161,6 +161,9 @@ GET http://localhost:3000/users/8beae30b-8cc0-48aa-abca-3b717557edb4
 Authorization: Basic: <email>:<password>
 
 
+###
+POST http://localhost:3000/files/uploadImage/1efe88a1-dce8-4b2a-b031-db3ffcdeaee5
+
 ### UPDATE IMAGES
 POST http://localhost:3000/files/uploadImage/1efe88a1-dce8-4b2a-b031-db3ffcdeaee5
 Content-Type: multipart/form-data; boundary=boundary123
@@ -171,3 +174,16 @@ Content-Type: image/jpeg
 
 < binary data >
 --boundary123--
+
+###
+PUT http://localhost:3000/products/9d3da396-6758-4b7b-8346-31f2e3a2c93d
+Content-Type: application/json
+Authorization: Basic: <email>:<password>
+
+{
+  "name": "Modifyed Product 1",
+  "description": "Product 1",
+  "price": 20,
+  "stock": true,
+  "imgUrl": "http://google.com/imagen4"
+}

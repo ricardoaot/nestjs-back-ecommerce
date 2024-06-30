@@ -20,7 +20,7 @@ export class User {
     email: string;
 
     @Column({
-        length: 40 // 20 was original requeriment but it was too short for hashing
+        length: 100 // 20 was original requeriment but it was too short for hashing
     })
     password: string;
 

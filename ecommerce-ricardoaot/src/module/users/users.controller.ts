@@ -52,9 +52,9 @@ export class UsersController {
     }
   }
 
+  /*
   @Post('/')
   async createUser(
-    //@Body() user: Omit<User, 'id'>, 
     @Body() user: CreateUserDto, 
     @Res() response: Response
   ) {
@@ -65,6 +65,7 @@ export class UsersController {
       throw new BadRequestException(error.message);
     }
   }
+  */
 
   @Put('/:id')
   @UseGuards(AuthGuard)

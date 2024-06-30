@@ -32,15 +32,6 @@ export class FileController {
     return cloudinaryResult
   }
 
-/*
-  const cloudinaryResult = await this.cloudinaryService.uploadImage(file);
-  const { url } = cloudinaryResult;
-
-  const updateProduct = await this.fileService.uploadProductImage(id, url);
-  return updateProduct;
-*/ 
-
-
   @Get()
   findAll() {
     return this.fileService.findAll();
