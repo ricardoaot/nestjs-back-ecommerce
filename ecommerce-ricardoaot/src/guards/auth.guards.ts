@@ -31,9 +31,10 @@ export class AuthGuard implements CanActivate {
 
             payLoad.iat = new Date(payLoad.iat * 1000);
             payLoad.exp = new Date(payLoad.exp * 1000);
-            payLoad.roles = ['admin'];
+            
             request.user = payLoad;
             return true
+            
         } catch (error) {
             throw new UnauthorizedException('Invalid Bearer Token');
         }

@@ -5,6 +5,7 @@ import { SignInDto } from "./dto/signIn.dto";
 import { SignUpDto } from "./dto/signUp.dto";
 import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from 'bcrypt';
+import { RolesEnum } from "../users/enum/roles.enum";
 
 @Injectable()
 export class AuthService {
@@ -29,18 +30,23 @@ export class AuthService {
         if (!isPasswordValid) 
             throw new BadRequestException('Email or password incorrect');
         
-        const { password: _, ...userWithoutPassword } = user
+        const role = user.isAdmin ? RolesEnum.Admin : RolesEnum.User
+
+        const { isAdmin, password: _, ...userWithoutSensitiveData } = user
 
         const userPayload = {
             sub: user.id,
             id: user.id,
-            email: user.email
+            email: user.email,
+            roles: [
+                role //user.isAdmin ? RolesEnum.Admin : RolesEnum.User
+            ]
         }
 
         const token = await this.jwtService.signAsync(userPayload)
 
         return {
-            user: userWithoutPassword, 
+            user: userWithoutSensitiveData, 
             token: token
         }        
     }

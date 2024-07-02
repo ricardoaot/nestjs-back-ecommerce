@@ -5,6 +5,9 @@ import { Request, Response, response } from "express";
 import { Product } from "./product.entity";
 import { AuthGuard } from "src/guards/auth.guards";
 import { ProductsSeeder } from "./products.seeder";
+import { RolesGuard } from "src/guards/roles.guards";
+import { Roles } from "src/decorators/roles.decorator";
+import { RolesEnum } from "../users/enum/roles.enum";
 
 @Controller('products')
 export class ProductsController {
@@ -65,7 +68,11 @@ export class ProductsController {
     }
     
     @Put(':id')
-    @UseGuards(AuthGuard)
+    @Roles(RolesEnum.Admin)
+    @UseGuards(
+        AuthGuard,
+        RolesGuard
+    )
     async updateProducts(
         @Body() product: Product, 
         @Param('id', ParseUUIDPipe) id: string, 

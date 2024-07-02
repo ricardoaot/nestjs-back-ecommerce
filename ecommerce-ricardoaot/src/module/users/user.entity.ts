@@ -47,6 +47,11 @@ export class User {
     })
     city: string;
 
+    @Column({
+        default: false
+    })
+    isAdmin: boolean;
+
     @OneToMany(
         () => Order, 
         (order) => order.user

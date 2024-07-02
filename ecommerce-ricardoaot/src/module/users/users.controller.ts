@@ -18,13 +18,20 @@ import { User } from './user.entity';
 import { Response, response } from 'express';
 import { AuthGuard } from 'src/guards/auth.guards';
 import { CreateUserDto } from './user.dto';
+import { RolesGuard } from 'src/guards/roles.guards';
+import { Roles } from 'src/decorators/roles.decorator';
+import { RolesEnum } from './enum/roles.enum';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
   @Get('/')
-  @UseGuards(AuthGuard) 
+  @Roles(RolesEnum.Admin)
+  @UseGuards(
+    AuthGuard,
+    RolesGuard
+  ) 
   async getUsers(
     @Query('limit') limit: number = 5,
     @Query('page') page: number = 1,
