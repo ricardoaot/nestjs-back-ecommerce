@@ -4,3 +4,11 @@ npm run migration:create src/migrations/created #Se crea el sql de migración in
 npm run migration:generate src/migrations/initial #Se crea el sql de migración inicial
 npm run build           # Compilar y pasar el archivo de migración a dist
 npm run migration:run   # Ejecución del archivo de migración sql
+
+
+
+##Git commands
+ git push origin --force  
+ git commit --amend -m "L9 - Role validation by JWT, Guard and Decorator implementation"
+
+

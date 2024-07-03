@@ -5,7 +5,7 @@ import { UpdateFileDto } from './dto/update-file.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CloudinaryService } from './cloudinary.service';
 import { ProductsService } from '../products/products.service';
-import { AuthGuard } from 'src/guards/auth.guards';
+import { AuthGuard } from '../../guards/auth.guards';
 
 @Controller('files')
 export class FileController {

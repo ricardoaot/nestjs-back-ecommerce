@@ -8,14 +8,14 @@ POST http://localhost:3000/auth/signin
 Content-Type: application/json
 
 {
-  "email": "user12@gmail.com",
+  "email": "user4@gmail.com",
   "password": "Claudia@1234"
 }
 ###
 
 ### USER ###
 GET http://localhost:3000/users
-Authorization: Basic: <email>:<password>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmNGQzZDM3Mi03ZDRhLTQ3ZTAtODQxYy0wMzM0NzgyODNhYWYiLCJpZCI6ImY0ZDNkMzcyLTdkNGEtNDdlMC04NDFjLTAzMzQ3ODI4M2FhZiIsImVtYWlsIjoidXNlcjRAZ21haWwuY29tIiwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3MTk4ODA1MDEsImV4cCI6MTcxOTg4NDEwMX0.w-JFPpPpuEcKMzBWu66ykZs3YFrk98CFkChDTaAfUN0
 
 
 ###
@@ -34,7 +34,7 @@ Content-Type: application/json
 {
   "email": "user4@gmail.com",
   "name": "User 4",
-  "password": "1234",
+  "password": "Claudia@1234",
   "address": "Calle 4",
   "phone": "4123456789",
   "city": "Lima",
