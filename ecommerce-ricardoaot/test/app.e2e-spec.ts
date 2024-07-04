@@ -2,11 +2,13 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
+import { DataSource } from 'typeorm';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
   let token = '';
   let adminToken = '';
+  let datasource: DataSource;
 
   let userDemo = { 
     email: "user6@gmail.com",
@@ -30,41 +32,55 @@ describe('AppController (e2e)', () => {
   }
 
   beforeEach(async () => {
+    //Before execution of it blocks in describe suite
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();
+
+    datasource = app.get(DataSource);
+    //await datasource.initialize();
+    //await datasource.query(`DELETE FROM users;`)
   });
+
+  beforeAll(async () => {
+    //Before execution of describe blocks
+  })
+  afterAll(async () => {
+    await datasource.query(`DELETE FROM users;`)
+    await app.close();
+  })
 
   it.only('POST /auth/signup should create a user without admin role', async () => {
-    console.log('step 1')
-    const req = 
-      await request(app.getHttpServer())
+    return await request(app.getHttpServer())
       .post('/auth/signup').send(userDemo)
-      .expect(201)
+      //.expect(201)
+      .then(res => {
+        console.log(res.status, res.body)
+        expect(res.status).toEqual(201)
+        expect(res.body).toBeDefined();
+      })
   
-    console.log(req.body)
-    expect(req.body).toBeDefined();
   });
 
-  it.only('POST /auth/signup should create a user with admin role', async () => {
-    console.log('step 2')
-    const req = 
-      await request(app.getHttpServer())
-      .post('/auth/signup').send(adminUserDemo)
-      .expect(201)
-  
-    //expect(200)
-    console.log(req.body)
-    expect(req.body).toBeDefined();
-  });
+  it.only(
+    'POST /auth/signup should create a user with admin role', 
+    async () => {
+      return await request(app.getHttpServer())
+        .post('/auth/signup').send(adminUserDemo)
+        .expect(201)
+        .then(res => {
+          console.log(res.status, res.body)
+          expect(res.status).toEqual(201)
+          expect(res.body).toBeDefined();
+        })  
+    }
+  );
 
   it.only('POST /auth/signin should return token for user without admin role', async () => {
-    console.log('step 3')
-    const req = 
-      await request(app.getHttpServer())
+    return await request(app.getHttpServer())
       .post('/auth/signin').send(
         {
           email: userDemo.email,
@@ -72,15 +88,17 @@ describe('AppController (e2e)', () => {
         }
       )
       //.expect(201)
-  
-    console.log(req.body)
-    token = req.body.token
-    expect(req.body).toBeDefined();
-    expect(req.body.token).toBeDefined();
+      .then(res => {
+        console.log(res.status, res.body)
+        token = res.body.token
+        expect(res.status).toEqual(201)
+        expect(res.body).toBeDefined();
+        expect(res.body.token).toBeDefined();
+      })
+
   });
 
   it.only('POST /auth/signin should return token for user with admin role', async () => {
-    console.log('step 4')
     const req = 
       await request(app.getHttpServer())
       .post('/auth/signin').send(
@@ -90,16 +108,16 @@ describe('AppController (e2e)', () => {
         }
       )
       //.expect(201)
-  
-    //expect(200)
-    console.log(req.body)
-    adminToken = req.body.token
-    expect(req.body).toBeDefined();
-    expect(req.body.token).toBeDefined();
+      .then(res => {
+        console.log(res.status, res.body)
+        adminToken = res.body.token
+        expect(res.status).toEqual(201)
+        expect(res.body).toBeDefined();
+        expect(res.body.token).toBeDefined();
+      })
   });
 
   it.only('Get /users should return forbiden message for unauthorized user', async () => {
-    console.log('step 5')
     return await request(app.getHttpServer())
       .get('/users')
       .set('Authorization', `Bearer ${token}`)
@@ -113,11 +131,25 @@ describe('AppController (e2e)', () => {
     return await request(app.getHttpServer())
     .get('/users')
     .set('Authorization', `Bearer ${adminToken}`)
-    .expect(200)
     .then(res => {
-      console.log(res.body)
+      console.log(res.status, res.body)
+      expect(res.status).toEqual(200)
+      expect(res.body).toBeInstanceOf(Object)
       //expect(res.body.message).toEqual('User does not have permission to access this route')
     })
   });
+
+  // Category routes seed data
+
+
+  // Product routes seed data
+
+  // file update picture
+
+  // Order routes
+
+  // order detail
+
+
 
 });
