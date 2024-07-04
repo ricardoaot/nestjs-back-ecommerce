@@ -3,10 +3,10 @@ import { ProductsService } from "./products.service";
 import { ProductsDBService } from "./products.DB.service";
 import { Request, Response, response } from "express";
 import { Product } from "./product.entity";
-import { AuthGuard } from "src/guards/auth.guards";
+import { AuthGuard } from "../../guards/auth.guards";
 import { ProductsSeeder } from "./products.seeder";
-import { RolesGuard } from "src/guards/roles.guards";
-import { Roles } from "src/decorators/roles.decorator";
+import { RolesGuard } from "../../guards/roles.guards";
+import { Roles } from "../../decorators/roles.decorator";
 import { RolesEnum } from "../users/enum/roles.enum";
 
 @Controller('products')

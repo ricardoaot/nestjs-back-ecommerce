@@ -3,7 +3,7 @@ import { OrdersService } from "./orders.service";
 import { Order } from "./order.entity";
 import { Response } from "express";
 import { CreateOrderDto } from "./orders.dto";
-import { AuthGuard } from "src/guards/auth.guards";
+import { AuthGuard } from "../../guards/auth.guards";
 
 @Controller('orders')
 export class OrdersController {

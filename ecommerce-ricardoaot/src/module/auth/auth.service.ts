@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { UsersRepository } from "src/module/users/users.repository";
-import { User } from "src/module/users/user.entity";
+import { UsersRepository } from "../../module/users/users.repository";
+import { User } from "../../module/users/user.entity";
 import { SignInDto } from "./dto/signIn.dto";
 import { SignUpDto } from "./dto/signUp.dto";
 import { JwtService } from "@nestjs/jwt";

@@ -16,10 +16,10 @@ import {
 import { UsersService } from './users.service';
 import { User } from './user.entity';
 import { Response, response } from 'express';
-import { AuthGuard } from 'src/guards/auth.guards';
+import { AuthGuard } from '../../guards/auth.guards';
 import { CreateUserDto } from './user.dto';
-import { RolesGuard } from 'src/guards/roles.guards';
-import { Roles } from 'src/decorators/roles.decorator';
+import { RolesGuard } from '../../guards/roles.guards';
+import { Roles } from '../../decorators/roles.decorator';
 import { RolesEnum } from './enum/roles.enum';
 
 @Controller('users')

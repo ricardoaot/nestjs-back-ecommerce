@@ -50,6 +50,7 @@ export class UsersRepository {
     ): Promise <Omit <User, 'password'>> {
         const createdUser = await this.userRepository.save(user);
         const  { password, ...userWithoutPassword } = createdUser;
+        //delete createdUser.password
         return userWithoutPassword;
     }
 
