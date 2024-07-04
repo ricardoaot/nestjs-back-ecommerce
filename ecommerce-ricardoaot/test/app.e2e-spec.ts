@@ -10,6 +10,8 @@ describe('AppController (e2e)', () => {
   let adminToken = '';
   let datasource: DataSource;
 
+  let productData = [];
+
   let userDemo = { 
     email: "user6@gmail.com",
     name: "User 4",
@@ -53,19 +55,22 @@ describe('AppController (e2e)', () => {
     await app.close();
   })
 
+  // Auth routes
   it.only('POST /auth/signup should create a user without admin role', async () => {
     return await request(app.getHttpServer())
       .post('/auth/signup').send(userDemo)
       //.expect(201)
       .then(res => {
         console.log(res.status, res.body)
+        userDemo['id'] = res.body.signUpResult.id
+        console.log(userDemo)
         expect(res.status).toEqual(201)
         expect(res.body).toBeDefined();
       })
   
   });
 
-  it.only(
+  it(
     'POST /auth/signup should create a user with admin role', 
     async () => {
       return await request(app.getHttpServer())
@@ -87,7 +92,6 @@ describe('AppController (e2e)', () => {
           password: userDemo.password
         }
       )
-      //.expect(201)
       .then(res => {
         console.log(res.status, res.body)
         token = res.body.token
@@ -98,7 +102,7 @@ describe('AppController (e2e)', () => {
 
   });
 
-  it.only('POST /auth/signin should return token for user with admin role', async () => {
+  it('POST /auth/signin should return token for user with admin role', async () => {
     const req = 
       await request(app.getHttpServer())
       .post('/auth/signin').send(
@@ -117,7 +121,8 @@ describe('AppController (e2e)', () => {
       })
   });
 
-  it.only('Get /users should return forbiden message for unauthorized user', async () => {
+  // User routes
+  it('Get /users should return forbiden message for unauthorized user', async () => {
     return await request(app.getHttpServer())
       .get('/users')
       .set('Authorization', `Bearer ${token}`)
@@ -127,7 +132,7 @@ describe('AppController (e2e)', () => {
       })
   });
 
-  it.only('Get /users should return users', async () => {
+  it('Get /users should return users', async () => {
     return await request(app.getHttpServer())
     .get('/users')
     .set('Authorization', `Bearer ${adminToken}`)
@@ -139,17 +144,58 @@ describe('AppController (e2e)', () => {
     })
   });
 
-  // Category routes seed data
+  // Category routes 
+  it('Get /categories should return categories', async () => {
+    return await request(app.getHttpServer())
+    .get('/categories')
+    .then(res => {
+      console.log(res.status, res.body)
+      expect(res.status).toEqual(200)
+      expect(res.body).toBeInstanceOf(Object)
+    })
+  })
 
+  // Product routes 
+  it.only('Get /products should return products', async () => {
+    return await request(app.getHttpServer())
+    .get('/products')
+    .then(res => {
+      console.log(res.status, res.body)
+      productData = res.body
+      expect(res.status).toEqual(200)
+      expect(res.body).toBeInstanceOf(Object)
+    })
+  })
 
-  // Product routes seed data
-
-  // file update picture
 
   // Order routes
+  it.only('Post /orders should create an order', async () => {
+    return await request(app.getHttpServer())
+    .post('/orders')
+    .set('Authorization', `Bearer ${token}`)
+    .send({
+      "userId": userDemo['id'],
+      "products":  [
+        productData[0]['id'],
+        productData[1]['id']
+      ]
+    })
+    .then(res => {
+      console.log(res.status, res.body)
+      expect(res.status).toEqual(201)
+      expect(res.body).toBeInstanceOf(Object)
+    })
+  })
 
-  // order detail
-
-
+  it('Get /orders should return orders', async () => {
+    return await request(app.getHttpServer())
+    .get('/orders')
+    .set('Authorization', `Bearer ${adminToken}`)
+    .then(res => {
+      console.log(res.status, res.body)
+      expect(res.status).toEqual(200)
+      expect(res.body).toBeInstanceOf(Object)
+    })
+  })
 
 });
