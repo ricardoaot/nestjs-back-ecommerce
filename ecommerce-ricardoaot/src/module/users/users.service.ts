@@ -34,7 +34,7 @@ export class UsersService {
         return await this.usersRepository.createUser(user);
     }
 
-    async updateUser(user: User, id: string): Promise<string|null> {
+    async updateUser(user: Partial<User>, id: string): Promise<string|null> {
         return await this.usersRepository.updateUser(user, id);
     }
 

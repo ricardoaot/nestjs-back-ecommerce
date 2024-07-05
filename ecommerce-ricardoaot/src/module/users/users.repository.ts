@@ -54,7 +54,7 @@ export class UsersRepository {
         return userWithoutPassword;
     }
 
-    async updateUser(user: User, id: string): Promise<string|null> {
+    async updateUser(user: Partial<User>, id: string): Promise<string|null> {
         const foundUser = await this.userRepository.findOneBy({id});
         if(!foundUser) return null;
         const updatedUser = {...foundUser, ...user}
@@ -68,19 +68,4 @@ export class UsersRepository {
         const deletedUser = await this.userRepository.remove(foundUser);
         return deletedUser.id;
     }
-
-    /*
-    async logInUser(
-        email: string, sentPassword: string
-    ): Promise <Omit <User,'password'>> {
-        const foundUser = await this.userRepository.findOne({
-            where: {
-                email: email,
-                password: sentPassword
-            }
-        })
-        if(!foundUser) return null;
-        const { password, ...userWithoutPassword } = foundUser;
-        return userWithoutPassword;
-    }*/
 }
