@@ -6,7 +6,9 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { CloudinaryService } from './cloudinary.service';
 import { ProductsService } from '../products/products.service';
 import { AuthGuard } from '../../guards/auth.guards';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Files')
 @Controller('files')
 export class FileController {
   constructor(
@@ -17,6 +19,7 @@ export class FileController {
 
   @Post('uploadImage/:id')
   @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @UseInterceptors(FileInterceptor('image'))
   async uploadProductImage(
     //@Body() createFileDto: CreateFileDto 

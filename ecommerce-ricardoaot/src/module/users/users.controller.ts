@@ -21,7 +21,9 @@ import { CreateUserDto } from './user.dto';
 import { RolesGuard } from '../../guards/roles.guards';
 import { Roles } from '../../decorators/roles.decorator';
 import { RolesEnum } from './enum/roles.enum';
+import { ApiTags, ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 
+@ApiTags('Users')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
@@ -32,6 +34,9 @@ export class UsersController {
     AuthGuard,
     RolesGuard
   ) 
+  @ApiBearerAuth()
+  @ApiQuery({ name: 'limit', required: false, description: 'Number of elements per page', schema: { default: 5 } })
+  @ApiQuery({ name: 'page', required: false, description: 'Page number', schema: { default: 1 } })
   async getUsers(
     @Query('limit') limit: number = 5,
     @Query('page') page: number = 1,
@@ -48,6 +53,7 @@ export class UsersController {
 
   @Get(':id')
   @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   async getUserById(
     @Param('id', ParseUUIDPipe) id: string, 
     @Res() response: Response
@@ -59,21 +65,6 @@ export class UsersController {
       throw new BadRequestException(error.message);
     }
   }
-
-  /*
-  @Post('/')
-  async createUser(
-    @Body() user: CreateUserDto, 
-    @Res() response: Response
-  ) {
-    try{
-      const id = await this.usersService.createUser(user);
-      return response.status(201).send({ message: 'User created', id: id });
-    }catch(error) {
-      throw new BadRequestException(error.message);
-    }
-  }
-  */
 
   @Put('/:id')
   @UseGuards(AuthGuard)
@@ -92,6 +83,7 @@ export class UsersController {
 
   @Delete(':id')
   @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   async deleteUser(
     @Param('id', ParseUUIDPipe) id: string,
     @Res() response: Response,

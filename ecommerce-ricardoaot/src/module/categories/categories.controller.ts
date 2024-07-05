@@ -3,7 +3,9 @@ import { CategoriesService } from "./categories.service";
 import { CategoriesSeeder } from "./categories.seeder";
 import { Category } from "./category.entity";
 import { Response } from "express";
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags('Categories')
 @Controller('categories')
 export class CategoriesController {
     constructor(

@@ -4,7 +4,9 @@ import { Order } from "./order.entity";
 import { Response } from "express";
 import { CreateOrderDto } from "./orders.dto";
 import { AuthGuard } from "../../guards/auth.guards";
+import { ApiTags, ApiBearerAuth } from "@nestjs/swagger";
 
+@ApiTags('Orders')
 @Controller('orders')
 export class OrdersController {
     constructor(
@@ -13,6 +15,7 @@ export class OrdersController {
 
     @Get(':id')
     @UseGuards(AuthGuard)
+    @ApiBearerAuth()
     async getOrder(
         @Param('id', ParseUUIDPipe) id: string, 
         @Query('limit') limit: number, 

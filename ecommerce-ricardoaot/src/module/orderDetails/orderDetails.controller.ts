@@ -1,6 +1,9 @@
 import { BadRequestException, Controller, Get, Query, Res } from "@nestjs/common";
 import { OrderDetailsService } from "./orderDetails.service";
 import { Response } from "express";
+import { ApiTags } from "@nestjs/swagger";
+
+@ApiTags('Order Details')
 @Controller('orderDetails')
 export class OrderDetailsController {
     constructor(

@@ -7,8 +7,13 @@ npm run migration:run   # Ejecución del archivo de migración sql
 
 
 
-##Git commands
+## Git commands
  git push origin --force  
  git commit --amend -m "L9 - Role validation by JWT, Guard and Decorator implementation"
 
 
+
+## L11 - OPEN API 
+npm install --save @nestjs/swagger
+# nest-cli.json modification
+# main.ts modification

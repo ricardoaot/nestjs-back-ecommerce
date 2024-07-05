@@ -1,11 +1,11 @@
+import { PickType } from "@nestjs/swagger";
 import { IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { SignUpDto } from "./signUp.dto";
 
-export class SignInDto {
-    @IsNotEmpty()
-    @IsEmail()
-    email: string;
-
-    @IsNotEmpty()
-    @IsString()
-    password: string;
-}
+export class SignInDto 
+     extends PickType (SignUpDto, ['email']) 
+    {
+        @IsNotEmpty()
+        @IsString()
+        password: string;
+    }

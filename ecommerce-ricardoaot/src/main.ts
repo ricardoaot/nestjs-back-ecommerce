@@ -5,6 +5,7 @@ import { CategoriesController } from './module/categories/categories.controller'
 import { ProductsController } from './module/products/products.controller';
 import { BadRequestException, Res, ValidationPipe } from '@nestjs/common';
 import { Response } from 'express';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -28,6 +29,17 @@ async function bootstrap() {
       }
     })
   );
+
+  // Swagger - API Documentation
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle('Ecommerce API')
+    .setDescription('The Ecommerce API description')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup('api', app, document);
 
   // Seeders call
   const categorySeeder = app.get(CategoriesController);

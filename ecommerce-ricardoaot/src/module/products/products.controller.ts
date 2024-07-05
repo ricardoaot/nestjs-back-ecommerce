@@ -8,7 +8,9 @@ import { ProductsSeeder } from "./products.seeder";
 import { RolesGuard } from "../../guards/roles.guards";
 import { Roles } from "../../decorators/roles.decorator";
 import { RolesEnum } from "../users/enum/roles.enum";
+import { ApiTags, ApiBearerAuth } from "@nestjs/swagger";
 
+@ApiTags('Products')
 @Controller('products')
 export class ProductsController {
     constructor( 
@@ -45,6 +47,7 @@ export class ProductsController {
 
     @Post('/')
     @UseGuards(AuthGuard)
+    @ApiBearerAuth()
     async createProducts(
         @Body() product:Omit<Product,'id'>, 
         @Res() response: Response
@@ -73,6 +76,7 @@ export class ProductsController {
         AuthGuard,
         RolesGuard
     )
+    @ApiBearerAuth()
     async updateProducts(
         @Body() product: Product, 
         @Param('id', ParseUUIDPipe) id: string, 
@@ -88,6 +92,7 @@ export class ProductsController {
 
     @Delete(':id')
     @UseGuards(AuthGuard)
+    @ApiBearerAuth()
     async deleteProducts(
         @Param('id', ParseUUIDPipe) id:string, 
         @Res() response: Response
