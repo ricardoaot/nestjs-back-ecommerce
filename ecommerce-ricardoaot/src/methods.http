@@ -8,7 +8,7 @@ POST http://localhost:3000/auth/signin
 Content-Type: application/json
 
 {
-  "email": "user4@gmail.com",
+  "email": "user6@gmail.com",
   "password": "Claudia@1234"
 }
 ###
@@ -31,15 +31,16 @@ Authorization: Basic: <email>:<password>
 POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
-{
-  "email": "user4@gmail.com",
-  "name": "User 4",
-  "password": "Claudia@1234",
-  "address": "Calle 4",
-  "phone": "4123456789",
-  "city": "Lima",
-  "country": "Peru"
-}
+{ 
+    "email": "user7@gmail.com",
+    "name": "User 4",
+    "password": "Claudia@1234",
+    "address": "Calle 4",
+    "phone": "4123456789",
+    "city": "Lima",
+    "country": "Peru",
+    "isAdmin": true
+  }
 ###
 PUT http://localhost:3000/users/1
 Content-Type: application/json
