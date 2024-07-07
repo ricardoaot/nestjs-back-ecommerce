@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  cont_app_ecommerce:
+    build: ./
+    ports:
+      - 3001:3000
+    depends_on:
+      - cont_postgresdb
+    env_file:
+      - .env
+
+  cont_postgresdb:
+    image: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    env_file:
+      - .env
+
+volumes:
+  pgdata:
+    
