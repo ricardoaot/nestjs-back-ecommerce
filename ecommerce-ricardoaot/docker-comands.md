@@ -43,3 +43,8 @@ docker run --name cont_app_ecommerce -p 3001:3000  --network net_app_ecommerce i
 
 ## Run docker Compose
 docker-compose up
+
+
+## Deploy in Render from Docker image
+Public url or name of my repo:
+ricardoaot/nest-ecommerce:latest
