@@ -27,12 +27,13 @@ Welcome to the Ecommerce API developed with NestJS! This backend project focuses
 - [@ricardoaot](https://www.github.com/ricardoaot)
 
 ## Demo
-
-[View Demo](#) <!-- Insert your demo link here -->
+**Disclaimer**: This project was deployed on a free tier of Render by Vercel. Low performance in loading is expected.
+- [View Demo](https://nest-ecommerce-am4b.onrender.com/api) <!-- Insert your demo link here -->
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot](https://portfolio.ricardoolivari.com/assets/portfolioScreenEcom4-93bd1a12.jpg)
+![App Screenshot](https://portfolio.ricardoolivari.com/assets/portfolioScreenEcom5-bbcfc348.jpg)
 
 ## Usage/Examples
 
@@ -42,7 +43,7 @@ Here's a quick example of how to consume this API from a frontend:
 import axios from 'axios';
 
 async function fetchProducts() {
-  const response = await axios.get('https://api.yourdomain.com/products');
+  const response = await axios.get('https://nest-ecommerce-am4b.onrender.com/products?limit=5&page=1');
   console.log(response.data);
 }
 
