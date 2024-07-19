@@ -37,6 +37,7 @@ export class UsersController {
   @ApiBearerAuth()
   @ApiQuery({ name: 'limit', required: false, description: 'Number of elements per page', schema: { default: 5 } })
   @ApiQuery({ name: 'page', required: false, description: 'Page number', schema: { default: 1 } })
+
   async getUsers(
     @Query('limit') limit: number = 5,
     @Query('page') page: number = 1,
@@ -51,9 +52,13 @@ export class UsersController {
     }
   }
 
+
+
+
   @Get(':id')
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
+
   async getUserById(
     @Param('id', ParseUUIDPipe) id: string, 
     @Res() response: Response
@@ -66,8 +71,12 @@ export class UsersController {
     }
   }
 
+
+
+
   @Put('/:id')
   @UseGuards(AuthGuard)
+
   async updateUser(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() user: User,
@@ -81,9 +90,12 @@ export class UsersController {
     }
   }
 
+
+
   @Delete(':id')
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
+  
   async deleteUser(
     @Param('id', ParseUUIDPipe) id: string,
     @Res() response: Response,

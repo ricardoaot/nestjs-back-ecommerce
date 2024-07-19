@@ -113,13 +113,14 @@ Content-Type: application/json
 Authorization: Basic: <email>:<password>
 
 {
-  "email": "user12@gmail.com",
-  "name": "Claudita",
+  "email": "ricardo@gmail.com",
+  "name": "Ricardo",
   "address": "Calle 10",
-  "password":"Claudia@1234",
+  "password":"Ricardo@1234",
   "phone": "412345",
   "country": "Peru",
-  "city":"Lima"
+  "city":"Lima",
+  "isAdmin":true
 }
 
 ### Category Seeder 
@@ -139,13 +140,13 @@ POST http://localhost:3000/orders/
 Content-Type: application/json
 
 {
-  "userId": "23ebff95-a6b0-4376-864f-ff0da411a4c3",
+  "userId": "0cacf662-6bff-4b24-945d-bf820ff16a34",
   "products":[
     {
-      "id":"4871688e-e431-40c6-99f5-7f841423bae9"
+      "id":"0cbf12c4-0e8e-47ee-ba03-a49a3764cb8a"
     },
     {
-      "id":"965004fc-2b84-4e68-a974-25ebfe347825"
+      "id":"c17b4af5-cc6b-4a79-9a42-12c3adb7b3b6"
     }
   ]
 }

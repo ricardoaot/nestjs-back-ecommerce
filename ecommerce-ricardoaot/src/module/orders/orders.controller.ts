@@ -18,12 +18,10 @@ export class OrdersController {
     @ApiBearerAuth()
     async getOrder(
         @Param('id', ParseUUIDPipe) id: string, 
-        @Query('limit') limit: number, 
-        @Query('page') page: number, 
         @Res() response: Response
     ){
         try{
-            const result = await this.ordersService.getOrder(id, limit, page);
+            const result = await this.ordersService.getOrder(id);
             return response.status(200).send(result);
         }catch(error) {
             throw new BadRequestException(error.message);
@@ -33,7 +31,11 @@ export class OrdersController {
 
     @Post('/')
     @UseGuards(AuthGuard)
-    async addOrder(@Body() order: CreateOrderDto, @Res() response: Response){
+    @ApiBearerAuth()
+    async addOrder(
+        @Body() order: CreateOrderDto, 
+        @Res() response: Response
+    ){
         try{
             const result = await this.ordersService.addOrder(order);
             return response.status(201).send(result);                

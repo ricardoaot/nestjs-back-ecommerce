@@ -17,9 +17,9 @@ export class OrdersService {
     ) {}
 
     async getOrder(
-        id: string, limit: number, page: number
-    ): Promise<Order[]> {
-        const result = await this.ordersRepository.getOrder(id, limit, page);
+        id: string
+    ): Promise<Order> {
+        const result = await this.ordersRepository.getOrder(id);
         return result
     }
 
@@ -76,7 +76,7 @@ export class OrdersService {
 
         console.log("Id new order", idNewOrder)
 
-        const result = this.getOrder(idNewOrder,null, null)
+        const result = this.getOrder(idNewOrder)
         return result
     }
 }

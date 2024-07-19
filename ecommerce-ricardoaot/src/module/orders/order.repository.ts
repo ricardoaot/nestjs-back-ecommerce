@@ -9,16 +9,16 @@ export class OrdersRepository {
     constructor(
         @InjectRepository(Order) private readonly ordersRepository: Repository<Order>
     ) {}
-    async getOrder(id: string, limit: number = 10, page: number = 1): Promise<Order[]> {
+    async getOrder(
+        id: string
+    ): Promise<Order> {
         /*
             Busca una orden recibida por id.
 
             Devuelve un objeto con la orden y los detalles de la orden (el detalle de la orden debe contener un array con todos los productos adquiridos).
         */
-        const result = await this.ordersRepository.find({
+        const result = await this.ordersRepository.findOne({
             where: {id},
-            skip: (page - 1) * limit,
-            take: limit,
             relations:{
                 user:true,
                 //orderDetails:true,
