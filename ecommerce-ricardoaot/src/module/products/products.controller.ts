@@ -8,7 +8,9 @@ import { ProductsSeeder } from "./products.seeder";
 import { RolesGuard } from "../../guards/roles.guards";
 import { Roles } from "../../decorators/roles.decorator";
 import { RolesEnum } from "../users/enum/roles.enum";
-import { ApiTags, ApiBearerAuth } from "@nestjs/swagger";
+import { ApiTags, ApiBearerAuth, ApiQuery } from "@nestjs/swagger";
+import { NewProductDTO } from "./dto/newProduct.dto";
+import { UpdateProductDTO } from "./dto/updateProduct.dto";
 
 @ApiTags('Products')
 @Controller('products')
@@ -20,6 +22,8 @@ export class ProductsController {
     ){}
 
     @Get('/')
+    @ApiQuery({ name: 'limit', required: false, description: 'Number of elements per page', schema: { default: 20 } })
+    @ApiQuery({ name: 'page', required: false, description: 'Page number', schema: { default: 1 } })
     async getProducts(
         @Query('limit') limit: number = 5, 
         @Query('page') page: number = 1, 
@@ -46,10 +50,14 @@ export class ProductsController {
     }
 
     @Post('/')
-    @UseGuards(AuthGuard)
+    @Roles(RolesEnum.Admin)
+    @UseGuards(
+        AuthGuard,
+        RolesGuard
+    )
     @ApiBearerAuth()
     async createProducts(
-        @Body() product:Omit<Product,'id'>, 
+        @Body() product: NewProductDTO, 
         @Res() response: Response
     ){
         try{
@@ -78,7 +86,7 @@ export class ProductsController {
     )
     @ApiBearerAuth()
     async updateProducts(
-        @Body() product: Product, 
+        @Body() product: UpdateProductDTO, 
         @Param('id', ParseUUIDPipe) id: string, 
         @Res() response: Response
     ){
@@ -91,7 +99,11 @@ export class ProductsController {
     }
 
     @Delete(':id')
-    @UseGuards(AuthGuard)
+    @Roles(RolesEnum.Admin)
+    @UseGuards(
+        AuthGuard,
+        RolesGuard
+    )
     @ApiBearerAuth()
     async deleteProducts(
         @Param('id', ParseUUIDPipe) id:string, 

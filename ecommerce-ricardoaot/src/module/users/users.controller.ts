@@ -56,7 +56,11 @@ export class UsersController {
 
 
   @Get(':id')
-  @UseGuards(AuthGuard)
+  @Roles(RolesEnum.Admin)
+  @UseGuards(
+    AuthGuard,
+    RolesGuard
+  ) 
   @ApiBearerAuth()
 
   async getUserById(
@@ -75,7 +79,12 @@ export class UsersController {
 
 
   @Put('/:id')
-  @UseGuards(AuthGuard)
+  @Roles(RolesEnum.Admin)
+  @UseGuards(
+    AuthGuard,
+    RolesGuard
+  ) 
+  @ApiBearerAuth()
 
   async updateUser(
     @Param('id', ParseUUIDPipe) id: string,
@@ -93,7 +102,11 @@ export class UsersController {
 
 
   @Delete(':id')
-  @UseGuards(AuthGuard)
+  @Roles(RolesEnum.Admin)
+  @UseGuards(
+    AuthGuard,
+    RolesGuard
+  ) 
   @ApiBearerAuth()
   
   async deleteUser(

@@ -18,7 +18,7 @@ export class CreateOrderDto {
 
 
     @ApiProperty({
-        example: '[]',
+        example: '[{"id": "9z2f4f16-a5b2-40c6-b677-f22574c020c4"}]',
         description: 'Array of order items with products',
     })
     @IsArray()

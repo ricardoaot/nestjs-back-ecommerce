@@ -1,9 +1,13 @@
-import { Controller, Post, Get, Body, Res, Delete, BadRequestException } from "@nestjs/common";
+import { Controller, Post, Get, Body, Res, Delete, BadRequestException, UseGuards } from "@nestjs/common";
 import { CategoriesService } from "./categories.service";
 import { CategoriesSeeder } from "./categories.seeder";
-import { Category } from "./category.entity";
 import { Response } from "express";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
+import { NewCategoryDTO } from "./dto/newCategory.dto";
+import { Roles } from "src/decorators/roles.decorator";
+import { RolesEnum } from "../../module/users/enum/roles.enum";
+import { AuthGuard } from "../../guards/auth.guards";
+import { RolesGuard } from "../../guards/roles.guards";
 
 @ApiTags('Categories')
 @Controller('categories')
@@ -35,8 +39,14 @@ export class CategoriesController {
     }
 
     @Post('/')
+    @Roles(RolesEnum.Admin)
+    @UseGuards(
+        AuthGuard,
+        RolesGuard
+    )
+    @ApiBearerAuth()
     async addCategory(
-        @Body() category: Omit<Category, 'id'>,
+        @Body() category: NewCategoryDTO,
         @Res() response: Response
     ) {
         try{

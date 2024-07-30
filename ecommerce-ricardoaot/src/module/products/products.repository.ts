@@ -28,7 +28,7 @@ export class ProductsRepository {
         });
     }
     
-    async createProduct(product: Omit<Product, 'id'>): Promise<Product> {        
+    async createProduct(product: Partial<Product>): Promise<Product> {        
         return await this.productRepository.save(product);
     }
 
@@ -53,10 +53,12 @@ export class ProductsRepository {
     */
 
     async deleteProduct(id: string): Promise<Product> {
+        console.log("id es: ",id)
         const productFound = await this.productRepository.findOneBy({id});
+        console.log("Producto es: ", productFound)
         if (!productFound) return undefined;
         if(productFound) {
-            await this.productRepository.remove(productFound);
+            return await this.productRepository.remove(productFound);
         }
     }  
 

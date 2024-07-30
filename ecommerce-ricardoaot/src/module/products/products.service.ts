@@ -14,7 +14,7 @@ export class ProductsService {
     async getProductById(id: string): Promise<Product> {
         return await this.productsRepository.getProductById(id);
     }
-    async createProduct(product: Omit<Product, 'id'>): Promise<string> {
+    async createProduct(product: Partial<Product>): Promise<string> {
         const createdProduct = await this.productsRepository.createProduct(product)
         return createdProduct.id
     }

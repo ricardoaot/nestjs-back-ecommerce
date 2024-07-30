@@ -6,7 +6,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { CloudinaryService } from './cloudinary.service';
 import { ProductsService } from '../products/products.service';
 import { AuthGuard } from '../../guards/auth.guards';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Files')
 @Controller('files')
@@ -20,7 +20,25 @@ export class FileController {
   @Post('uploadImage/:id')
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
-  @UseInterceptors(FileInterceptor('image'))
+  
+
+  @ApiOperation({ summary: 'Upload a file' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'File to upload',
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  
+
+  @UseInterceptors(FileInterceptor('file'))
   async uploadProductImage(
     //@Body() createFileDto: CreateFileDto 
     @Param('id', ParseUUIDPipe) id: string,   
