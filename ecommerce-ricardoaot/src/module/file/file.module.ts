@@ -7,16 +7,17 @@ import { ProductsService } from '../products/products.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Product } from '../products/product.entity';
 import { ProductsRepository } from '../products/products.repository';
+import { Category } from '../categories/category.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Product])],
+  imports: [TypeOrmModule.forFeature([Product, Category])],
   controllers: [FileController],
   providers: [
     FileService, 
     CloudinaryService, 
     CloudinaryConfig,
     ProductsService,
-    ProductsRepository
+    ProductsRepository,
   ],
 })
 export class FileModule {}

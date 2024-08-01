@@ -33,13 +33,13 @@ import TypeOrmConfig from './config/typeorm';
       secret: process.env.JWT_SECRET,
     }),
 
+    AuthModule,
     UsersModule, 
     ProductsModule, 
-    AuthModule,
     CategoriesModule,
+    FileModule,
     OrdersModule,
     OrderDetailsModule,
-    FileModule
   ],
   controllers: [AppController],
   providers: [AppService],

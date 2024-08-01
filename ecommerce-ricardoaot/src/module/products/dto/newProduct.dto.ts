@@ -47,6 +47,14 @@ export class NewProductDTO {
     @IsOptional()
     imgUrl: string
 
+
+    @ApiProperty({
+        example: 'Smartphone',
+        description: 'Redmi Xiomi 10',
+    })
+    @IsString()
+    category: string
+
 }
 
 

@@ -11,9 +11,10 @@ import { OrdersRepository } from "./order.repository";
 import { UsersRepository } from "../users/users.repository";
 import { OrderDetailsRepository } from "../orderDetails/orderDetails.repository";
 import { ProductsRepository } from "../products/products.repository";
+import { Category } from "../categories/category.entity";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Order, OrderDetail, Product, User])],
+    imports: [TypeOrmModule.forFeature([Order, OrderDetail, Product, Category, User])],
     controllers: [OrdersController],    
     providers: [
         OrdersService, 

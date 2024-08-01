@@ -8,7 +8,7 @@ export class OrderDetailsService {
         private readonly orderDetailsRepository: OrderDetailsRepository
     ) {}
 
-    async getOrderDetails(limit: number, page: number): Promise<OrderDetail[]> {
-        return await this.orderDetailsRepository.getOrderDetails(limit, page);
+    async getOrderDetails(id: string): Promise<OrderDetail[]> {
+        return await this.orderDetailsRepository.getOrderDetails(id);
     }
 }

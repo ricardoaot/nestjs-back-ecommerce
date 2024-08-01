@@ -1,12 +1,15 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { Product } from "./product.entity";
 import { Repository, MoreThan } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
+import { Category } from "../categories/category.entity";
+import { NewProductDTO } from "./dto/newProduct.dto";
 
 @Injectable()
 export class ProductsRepository {
     constructor(
-        @InjectRepository(Product) private productRepository: Repository<Product>
+        @InjectRepository(Product) private productRepository: Repository<Product>,
+        @InjectRepository(Category) private categoryRepository: Repository<Category>
     ){
         //super(productRepository.target, productRepository.manager, productRepository.queryRunner);
     }
@@ -28,8 +31,21 @@ export class ProductsRepository {
         });
     }
     
-    async createProduct(product: Partial<Product>): Promise<Product> {        
-        return await this.productRepository.save(product);
+    async createProduct(product: NewProductDTO): Promise<Product> { 
+        const foundCategory = await this.categoryRepository.findOneBy({name: product.category}); 
+
+        if(!foundCategory) throw new NotFoundException('Product not found');
+        
+        const foundProduct = await this.productRepository.findOneBy({name: product.name});
+        if(foundProduct) throw new NotFoundException('Product already exists');
+
+        const product2 = new Product();
+        product2.name = product.name;
+        product2.price = product.price;
+        product2.stock = product.stock;
+        product2.category = foundCategory
+        
+        return await this.productRepository.save(product2);
     }
 
     async updateProduct(product: Partial<Product>, id: string): Promise<Product> {

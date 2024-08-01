@@ -21,6 +21,15 @@ export class ProductsController {
         private readonly productsSeeder: ProductsSeeder
     ){}
 
+    @Post('/seeder')
+    async seedProducts(){
+        try{
+            return await this.productsSeeder.seedProducts();            
+        }catch(error) {
+            throw new BadRequestException(error.message);
+        }
+    }
+
     @Get('/')
     @ApiQuery({ name: 'limit', required: false, description: 'Number of elements per page', schema: { default: 20 } })
     @ApiQuery({ name: 'page', required: false, description: 'Page number', schema: { default: 1 } })
@@ -56,6 +65,7 @@ export class ProductsController {
         RolesGuard
     )
     @ApiBearerAuth()
+    
     async createProducts(
         @Body() product: NewProductDTO, 
         @Res() response: Response
@@ -69,14 +79,8 @@ export class ProductsController {
         }
     }
 
-    @Post('/seeder')
-    async seedProducts(){
-        try{
-            return await this.productsSeeder.seedProducts();            
-        }catch(error) {
-            throw new BadRequestException(error.message);
-        }
-    }
+
+    
     
     @Put(':id')
     @Roles(RolesEnum.Admin)

@@ -11,14 +11,16 @@ export class OrderDetailsRepository {
     async addOrderDetail(orderDetail: any): Promise<any> {
         return await this.orderDetailsRepository.save(orderDetail);
     }
+
     async getOrderDetails(
-        limit: number = 10, 
-        page: number = 1
+        id: string
     ): Promise <OrderDetail[]> {
         
         return await this.orderDetailsRepository.find({
-            skip: (page - 1) * limit,
-            take: limit
+            where: {id: id},
+            relations: {
+                products: true
+            }
         })
     }
 }

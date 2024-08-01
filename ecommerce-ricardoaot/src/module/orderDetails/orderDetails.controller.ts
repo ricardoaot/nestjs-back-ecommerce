@@ -1,7 +1,8 @@
-import { BadRequestException, Controller, Get, Query, Res } from "@nestjs/common";
+import { BadRequestException, Controller, Get, Param, ParseUUIDPipe, Query, Res, UseGuards } from "@nestjs/common";
 import { OrderDetailsService } from "./orderDetails.service";
 import { Response } from "express";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
+import { AuthGuard } from "../../guards/auth.guards";
 
 @ApiTags('Order Details')
 @Controller('orderDetails')
@@ -9,16 +10,17 @@ export class OrderDetailsController {
     constructor(
         private readonly orderDetailsService: OrderDetailsService
     ){}
-    @Get("/")
+
+    @Get("/:id")
+    @UseGuards(AuthGuard)
+    @ApiBearerAuth()
     async getOrderDetails(
-        @Query('limit') limit: number, 
-        @Query('page') page: number, 
-        @Res() res: Response
+        @Param('id', ParseUUIDPipe) id: string, 
+        @Res() response: Response
     ){
         try{
-            return await this.orderDetailsService.getOrderDetails(
-                limit, page
-            );
+            const result = await this.orderDetailsService.getOrderDetails(id);
+            return response.status(200).send(result);
         }catch(error) {
             throw new BadRequestException(error.message);
         }
