@@ -15,21 +15,17 @@ export class ProductsSeeder {
         const categories = await this.categoryRepository.find();
 
         for (const product of productData) {
-            console.log(product)
             const foundCategory = categories.find(c => c.name === product.category);
             
-            //console.log(foundCategory)
-
             if(foundCategory){
                 const foundProduct = await this.productRepository.findOneBy({name: product.name})
-                //console.log(foundProduct)
 
                 if (!foundProduct){
                     const newProduct = new Product();
                     newProduct.name = product.name;
+                    newProduct.description = product.description;
                     newProduct.price = product.price;
                     newProduct.stock = product.stock;
-                    newProduct.description = product.description;
                     newProduct.category = foundCategory 
 
                     await this.productRepository.save(newProduct);
