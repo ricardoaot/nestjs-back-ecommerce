@@ -24,6 +24,7 @@ export class ProductsController {
     @Post('/seeder')
     async seedProducts(){
         try{
+            console.log('Seeding products...');
             return await this.productsSeeder.seedProducts();            
         }catch(error) {
             throw new BadRequestException(error.message);

@@ -49,8 +49,8 @@ export class NewProductDTO {
 
 
     @ApiProperty({
-        example: 'Smartphone',
-        description: 'Redmi Xiomi 10',
+        example: 'smartphone',
+        description: 'Type of product',
     })
     @IsString()
     category: string

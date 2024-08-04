@@ -2,9 +2,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CategoriesController } from './categories.controller';
 import { CategoriesService } from './categories.service';
 import { CategoriesSeeder } from './categories.seeder';
-import { Category } from './category.entity';
 import { BadRequestException } from '@nestjs/common';
 import { Response } from 'express';
+import { NewCategoryDTO } from './dto/newCategory.dto';
+import { JwtService } from '@nestjs/jwt';
 
 describe('CategoriesController', () => {
   let controller: CategoriesController;
@@ -31,6 +32,7 @@ describe('CategoriesController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [CategoriesController],
       providers: [
+        JwtService,
         { provide: CategoriesService, useValue: mockCategoriesService },
         { provide: CategoriesSeeder, useValue: mockCategoriesSeeder },
       ],
@@ -62,7 +64,7 @@ describe('CategoriesController', () => {
 
   it('should add a category', async () => {
     const mockRes = mockResponse();
-    const newCategory: Omit<Category, 'id'> = { name: 'New Category' };
+    const newCategory: NewCategoryDTO = { name: 'New Category' };
     const createdCategory = { id: 1, ...newCategory };
     mockCategoriesService.addCategory.mockResolvedValue(createdCategory);
     await controller.addCategory(newCategory, mockRes);

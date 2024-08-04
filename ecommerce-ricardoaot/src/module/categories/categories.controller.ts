@@ -4,7 +4,7 @@ import { CategoriesSeeder } from "./categories.seeder";
 import { Response } from "express";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { NewCategoryDTO } from "./dto/newCategory.dto";
-import { Roles } from "src/decorators/roles.decorator";
+import { Roles } from "../../decorators/roles.decorator";
 import { RolesEnum } from "../../module/users/enum/roles.enum";
 import { AuthGuard } from "../../guards/auth.guards";
 import { RolesGuard } from "../../guards/roles.guards";
@@ -20,6 +20,7 @@ export class CategoriesController {
     @Post('/seeder')
     async seedCategories() {
         try{
+            console.log('Seeding categories...');
             return await this.categoriesSeeder.seedCategories()
         }catch(error) {
             throw new BadRequestException(error.message);

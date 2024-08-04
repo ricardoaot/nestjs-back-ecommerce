@@ -3,14 +3,25 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
 import { DataSource } from 'typeorm';
+import { testDataSource } from '../src/config/typeorm-test';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
   let token = '';
   let adminToken = '';
   let datasource: DataSource;
+  let idOrder = '';
 
-  let productData = [];
+  let productData = [
+    {
+      "id": "7d0f4f16-a5b2-40c6-b677-f22574c020c4",
+      "name": "Product 1",
+    },
+    {
+      "id": "8d0f4f16-a5b2-40c6-b677-f22574c020c2",
+      "name": "Product 2",
+    }
+  ];
 
   let userDemo = { 
     email: "user6@gmail.com",
@@ -33,7 +44,9 @@ describe('AppController (e2e)', () => {
     isAdmin: true
   }
 
-  beforeEach(async () => {
+  // DROP SCHEMA MUST BE SET FALSE
+  
+  beforeAll(async () => {
     //Before execution of it blocks in describe suite
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
@@ -42,7 +55,10 @@ describe('AppController (e2e)', () => {
     app = moduleFixture.createNestApplication();
     await app.init();
 
-    datasource = app.get(DataSource);
+    //datasource = app.get(DataSource);
+    datasource = testDataSource;
+    await datasource.initialize();
+
     //await datasource.initialize();
     //await datasource.query(`DELETE FROM users;`)
   });
@@ -51,12 +67,23 @@ describe('AppController (e2e)', () => {
     //Before execution of describe blocks
   })
   afterAll(async () => {
+    await datasource.query(`DELETE FROM orders;`)
     await datasource.query(`DELETE FROM users;`)
+    await datasource.query(`DELETE FROM order_details_products_products;`)
+    await datasource.query(`DELETE FROM products;`)
+    await datasource.query(`DELETE FROM categories;`)
+    await datasource.query(`DELETE FROM "orderDetails";`)
+
+/*
+    await datasource.destroy();
+    datasource = app.get(DataSource);
+    await datasource.initialize();
+*/
     await app.close();
   })
 
   // Auth routes
-  it.only('POST /auth/signup should create a user without admin role', async () => {
+  it('POST /auth/signup should create a user without admin role', async () => {
     return await request(app.getHttpServer())
       .post('/auth/signup').send(userDemo)
       //.expect(201)
@@ -84,7 +111,8 @@ describe('AppController (e2e)', () => {
     }
   );
 
-  it.only('POST /auth/signin should return token for user without admin role', async () => {
+  it('POST /auth/signin should return token for user without admin role', async () => {
+    console.log({"userDemo": userDemo}, userDemo.email, userDemo.password)
     return await request(app.getHttpServer())
       .post('/auth/signin').send(
         {
@@ -144,6 +172,29 @@ describe('AppController (e2e)', () => {
     })
   });
 
+
+  // Category seeder 
+  it('Post /categories/seeder should seed categories', async () => {
+    return await request(app.getHttpServer())
+    .post('/categories/seeder')
+    .then(res => {
+      console.log(res.status, res.body)
+      expect(res.status).toEqual(201)
+      expect(res.body).toBeInstanceOf(Object)
+    })
+  })
+
+  // Product seeder 
+  it('Post /products/seeder should seed products', async () => {
+    return await request(app.getHttpServer())
+    .post('/products/seeder')
+    .then(res => {
+      console.log(res.status, res.body)
+      expect(res.status).toEqual(201)
+      expect(res.body).toBeInstanceOf(Object)
+    })
+  })
+
   // Category routes 
   it('Get /categories should return categories', async () => {
     return await request(app.getHttpServer())
@@ -156,7 +207,7 @@ describe('AppController (e2e)', () => {
   })
 
   // Product routes 
-  it.only('Get /products should return products', async () => {
+  it('Get /products should return products', async () => {
     return await request(app.getHttpServer())
     .get('/products')
     .then(res => {
@@ -169,7 +220,9 @@ describe('AppController (e2e)', () => {
 
 
   // Order routes
-  it.only('Post /orders should create an order', async () => {
+  it('Post /orders should create an order', async () => {
+    console.log(userDemo['id'])
+    console.log(productData)
     return await request(app.getHttpServer())
     .post('/orders')
     .set('Authorization', `Bearer ${token}`)
@@ -182,6 +235,7 @@ describe('AppController (e2e)', () => {
     })
     .then(res => {
       console.log(res.status, res.body)
+      idOrder = res.body.id
       expect(res.status).toEqual(201)
       expect(res.body).toBeInstanceOf(Object)
     })
@@ -189,7 +243,7 @@ describe('AppController (e2e)', () => {
 
   it('Get /orders should return orders', async () => {
     return await request(app.getHttpServer())
-    .get('/orders')
+    .get(`/orders/${idOrder}`)
     .set('Authorization', `Bearer ${adminToken}`)
     .then(res => {
       console.log(res.status, res.body)

@@ -3,6 +3,7 @@ import { CategoriesService } from "./categories.service";
 import { Category } from "./category.entity";
 import { Repository } from "typeorm";
 import { getRepositoryToken } from "@nestjs/typeorm";
+import { NewCategoryDTO } from "./dto/newCategory.dto";
 
 describe('CategoriesService', () => {
     let service: CategoriesService;
@@ -36,7 +37,7 @@ describe('CategoriesService', () => {
     });
 
     it('should add category', async () => {
-        const newCategory: Omit<Category, 'id'> = { name: "test" };
+        const newCategory: NewCategoryDTO = { name: "test" };
         const result = await service.addCategory(newCategory);
 
         expect(result).toBeDefined();
@@ -46,8 +47,8 @@ describe('CategoriesService', () => {
 
     it('should get all categories', async () => {
         const categories: Category[] = [
-            { id: "4871688e-e431-40c6-99f5-7f841423bae9", name: "test" },
-            { id: "965004fc-2b84-4e68-a974-25ebfe347825", name: "test2" },
+            { id: "4871688e-e431-40c6-99f5-7f841423bae9", name: "test", products: [] },
+            { id: "965004fc-2b84-4e68-a974-25ebfe347825", name: "test2", products: [] },
         ];
         jest.spyOn(repository, 'find').mockResolvedValue(categories);
         const result = await service.getCategories();
@@ -63,7 +64,7 @@ describe('CategoriesService', () => {
     });
 
     it('should call the repository save method when adding a category', async () => {
-        const newCategory: Omit<Category, 'id'> = { name: 'New Category' };
+        const newCategory: NewCategoryDTO = { name: 'New Category' };
         const saveSpy = jest.spyOn(repository, 'save').mockResolvedValue({ id: '1', ...newCategory } as Category);
         await service.addCategory(newCategory);
         expect(saveSpy).toHaveBeenCalledTimes(1);

@@ -55,10 +55,10 @@ describe('ProductsService', () => {
       productsRepository.createProduct = jest.fn().mockResolvedValue(mockProduct);
 
       const result = await productsService.createProduct(
-        { name: 'Test Product', description: '', price: 100, stock: 10, imgUrl: '', orderDetails: [] }
+        { name: 'Test Product', description: '', price: 100, stock: 10, imgUrl: '', category: 'smartphone' },
       );
       expect(result).toEqual('1');
-      expect(productsRepository.createProduct).toHaveBeenCalledWith({ name: 'Test Product', description: '', price: 100, stock: 10, imgUrl: '', orderDetails: []});
+      expect(productsRepository.createProduct).toHaveBeenCalledWith({ name: 'Test Product', description: '', price: 100, stock: 10, imgUrl: '', category: 'smartphone'});
     });
   });
 
