@@ -9,7 +9,7 @@ Welcome to the Ecommerce API developed with NestJS! This backend project focuses
 - **Framework:** Node.js, Express, NestJS
 - **Testing:** JestJS
 - **Security:** JWT (JSON Web Tokens)
-- **Database:** TypeORM
+- **Database:** Postgres, TypeORM
 - **Documentation:** Swagger
 - **Containerization:** Docker
 
@@ -32,8 +32,16 @@ Welcome to the Ecommerce API developed with NestJS! This backend project focuses
 
 ## Screenshots
 
-![App Screenshot](https://portfolio.ricardoolivari.com/assets/portfolioScreenEcom4-93bd1a12.jpg)
-![App Screenshot](https://portfolio.ricardoolivari.com/assets/portfolioScreenEcom5-bbcfc348.jpg)
+<img src="https://portfolio.ricardoolivari.com/assets/portfolioScreenEcom4-93bd1a12.jpg" width="700"
+/>
+<img src="https://portfolio.ricardoolivari.com/assets/portfolioScreenEcom5-bbcfc348.jpg" width="700"
+/>
+
+## Video demo explanation
+
+[<img src="./ecommerce-ricardoaot/docs/video-demo-play-screen.png" width="500"
+/>](https://www.youtube.com/embed/PKj9LXgJFwY)
+
 
 ## Usage/Examples
 
